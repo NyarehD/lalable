@@ -16,12 +16,12 @@
                 <nav class="hidden md:block" aria-label="header-navigation">
                     <ul class="text-co flex items-center gap-4 text-sm">
                         <li>
-                            <NavBarLink route-name="pokedex"
-                                >Pokedex</NavBarLink
+                            <NavBarLink link="/"
+                                >NewsFeed</NavBarLink
                             >
                         </li>
                         <li>
-                            <NavBarLink route-name="about">About</NavBarLink>
+                            <NavBarLink link="dashboard">DashBoard</NavBarLink>
                         </li>
                         <li>
                             <DarkModeButton />
@@ -42,12 +42,12 @@
             <nav class="" aria-label="header-navigation">
                 <ul class="text-co flex flex-col items-center text-sm">
                     <li class="h-10 w-full text-center align-middle">
-                        <NavBarLink route-name="pokedex" @click="toggleNavBar">
+                        <NavBarLink link="pokedex" @click="toggleNavBar">
                             Pokedex
                         </NavBarLink>
                     </li>
                     <li class="h-10 w-full text-center align-middle">
-                        <NavBarLink route-name="about" @click="toggleNavBar">
+                        <NavBarLink link="about" @click="toggleNavBar">
                             About
                         </NavBarLink>
                     </li>
