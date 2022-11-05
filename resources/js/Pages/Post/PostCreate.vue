@@ -4,13 +4,17 @@
         <h1 class="text-3xl font-semibold mb-4">Create Post</h1>
         <textarea name="description" id="description" rows="4" placeholder="Write something..."
                   class="w-full rounded-3xl p-4 focus:outline-none border-none bg-gray-200 resize-none mb-4 "></textarea>
-        <div class="grid grid-cols-4 gap-2 mb-4" v-if="imgList.length!==0">
-            <img :src="img" alt="img" v-for="img in imgList" class="h-[12rem] w-full object-cover rounded-3xl">
+        <div class="mb-4" v-if="imgList.length!==0">
+            <div class="grid grid-cols-4 gap-2">
+                <img :src="img" alt="img" v-for="img in imgList" class="h-[12rem] w-full object-cover rounded-3xl">
+            </div>
+            <span v-if="errors['photos.0']" class="text-red-600 font-semibold">Only JPG and PNG are supported</span>
         </div>
         <div class="flex justify-between">
-            <input type="file" class="hidden" id="photoUpload" ref="fileUpload" @input="uploadAndPreviewPhoto" multiple>
+            <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUpload"
+                   @input="uploadAndPreviewPhoto" multiple>
             <label for="photoUpload">
-                <button class="primaryBtn" @click.prevent="fileUpload.click()">
+                <button class="primaryBtn px-3" @click.prevent="fileUpload.click()">
                     <Media />
                 </button>
             </label>
