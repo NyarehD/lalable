@@ -4,12 +4,7 @@
         <h1 class="text-3xl font-semibold mb-4">Create Post</h1>
         <textarea name="description" id="description" rows="4" placeholder="Write something..."
                   class="w-full rounded-3xl p-4 focus:outline-none border-none bg-gray-200 resize-none mb-4 "></textarea>
-        <div class="mb-4" v-if="imgList.length!==0">
-            <div class="grid grid-cols-4 gap-2">
-                <img :src="img" alt="img" v-for="img in imgList" class="h-[12rem] w-full object-cover rounded-3xl">
-            </div>
-            <span v-if="errors['photos.0']" class="text-red-600 font-semibold">Only JPG and PNG are supported</span>
-        </div>
+        <PreviewPhoto :img-list="imgList" :errors="errors"/>
         <div class="flex justify-between">
             <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUpload"
                    @input="uploadAndPreviewPhoto" multiple>
@@ -23,8 +18,9 @@
     </form>
 </template>
 <script setup>
-    import { useForm } from "@inertiajs/inertia-vue3";
     import Media from "@/Components/Icons/Media.vue";
+    import PreviewPhoto from "@/Components/PreviewPhoto.vue";
+    import { useForm } from "@inertiajs/inertia-vue3";
     import { ref } from "vue";
 
     const imgList = ref([]);
