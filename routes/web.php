@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,8 +15,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [PostsController::class, "index"]);
-
+Route::get('/', [PostController::class, "index"])->name("newsfeed");
+Route::middleware("auth")->group(function () {
+    Route::resource("/post", PostController::class);
+});
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
