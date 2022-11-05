@@ -1,8 +1,9 @@
 <template>
     <div class="">
         <NavBar />
-        <h1>This is layout</h1>
-        <slot />
+        <div class="py-6">
+            <slot />
+        </div>
     </div>
 </template>
 <script>
