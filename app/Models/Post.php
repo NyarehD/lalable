@@ -10,6 +10,6 @@ class Post extends Model {
 
     protected $with = ["post_photos"];
     public function post_photos() {
-        return $this->hasMany(PostPhoto::class,);
+        return $this->hasMany(PostPhoto::class);
     }
 }
