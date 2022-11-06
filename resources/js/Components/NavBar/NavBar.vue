@@ -21,7 +21,9 @@
             </div>
             <div class="flex items-center justify-end w-auto">
                 <div class="hidden md:block">
-                    <Link class="inline-flex items-center rounded-full bg-indigo-700 text-white px-3 h-9 hover:bg-indigo-900" href="post/create">
+                    <Link
+                        class="inline-flex items-center rounded-full bg-indigo-700 text-white px-3 h-9 hover:bg-indigo-900"
+                        href="post/create">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -32,7 +34,7 @@
                 </div>
                 <DarkModeButton class="mx-3" />
                 <div class="">
-                    <img src="/cat.jpg" alt="" class="w-11 h-auto rounded-full">
+                    <img :src="user.full_image_path" :alt="user.name" class="w-11 h-auto rounded-full">
                 </div>
                 <NavBarToggleBtn
                     @click="navBarToggle = !navBarToggle"
@@ -63,17 +65,19 @@
 </template>
 
 <script setup lang="ts">
-    import { ref } from "vue";
+    import { computed, ref } from "vue";
     import NavBarLink from "./NavBarLink.vue";
     import NavBarToggleBtn from "./NavBarToggleBtn.vue";
     import DarkModeButton from "./DarkModeButton.vue";
-    import {Link} from "@inertiajs/inertia-vue3"
+    import { Link, usePage } from "@inertiajs/inertia-vue3";
 
     const navBarToggle = ref(false);
 
     function toggleNavBar() {
         navBarToggle.value = !navBarToggle.value;
     }
+
+    const user = computed(() => usePage().props.value.auth.user);
 </script>
 
 <style scoped lang="scss">
