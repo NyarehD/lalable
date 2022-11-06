@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostPhoto;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -58,10 +60,15 @@ class PostController extends Controller {
     }
 
     public function show(Post $post) {
-        return Inertia::render("Post/PostShow", ['post' => $post]);
+        $post = $post->post_photos;
+        return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
     public function edit(Post $post) {
+        if (Gate::allows("post_owner", $post)) {
+            return Inertia::render("Post/PostEdit", ["post" => [$post, $post->post_photos()]]);
+        }
+        return abort(403);
     }
 
     public function update(Request $request, Post $post) {
