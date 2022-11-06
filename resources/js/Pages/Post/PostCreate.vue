@@ -3,8 +3,8 @@
           enctype="multipart/form-data">
         <h1 class="text-3xl font-semibold mb-4">Create Post</h1>
         <textarea name="description" id="description" rows="4" placeholder="Write something..."
-                  class="w-full rounded-3xl p-4 focus:outline-none border-none bg-gray-200 resize-none mb-4 "></textarea>
-        <PreviewPhoto :img-list="imgList" :errors="errors"/>
+                  class="w-full rounded-3xl p-4 focus:outline-none border-none bg-gray-200 resize-none mb-4" v-model="form.description"></textarea>
+        <PreviewPhoto :img-list="imgList" :errors="errors" />
         <div class="flex justify-between">
             <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUpload"
                    @input="uploadAndPreviewPhoto" multiple>
@@ -44,9 +44,7 @@
     }
 
     const submit = () => {
-        form.post(route("post.store"), {
-            onFinish: () => form.reset("description"),
-        });
+        form.post(route("post.store"));
     };
 </script>
 <script>
