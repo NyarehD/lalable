@@ -11,7 +11,8 @@
         <div class="px-4 pb-1" v-if="post.description">
             <p class="text-lg">{{ post.description }}</p>
         </div>
-        <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>0" />
+        <img :src="post.post_photos[0].photo_src" class="max-h-[30rem] w-full object-cover" v-if="post.post_photos.length===1">
+        <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>1" />
     </div>
 </template>
 <script setup>
