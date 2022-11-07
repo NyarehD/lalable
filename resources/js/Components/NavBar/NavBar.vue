@@ -2,13 +2,13 @@
     <header class="sticky inset-0 z-10 bg-white drop-shadow-xl dark:bg-neutral-800">
         <div
             class="flex max-w-2xl md:max-w-[75rem] items-center justify-between px-3 dark:bg-neutral-800 h-16 mx-auto ">
-            <a href="/" class="block">
+            <Link href="/" class="block">
                 <img
                     alt="Pokemon Logo"
                     src="/Pokemon_International.svg"
                     class="h-10 w-full"
                 />
-            </a>
+            </Link>
             <div class="bg-indigo-300 rounded-full h-9 px-3 pl-5 relative">
                 <span class="absolute inset-y-0 left-0 grid place-content-center ml-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -20,7 +20,7 @@
                 <input class="w-full pr-10 bg-transparent focus:outline-none mt-1 ml-7">
             </div>
             <div class="flex items-center justify-end w-auto">
-                <div class="hidden md:blockmr-3">
+                <div class="hidden md:block mr-3">
                     <Link
                         class="inline-flex items-center primaryBtn"
                         href="post/create">
