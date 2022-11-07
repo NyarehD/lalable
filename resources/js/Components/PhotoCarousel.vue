@@ -3,13 +3,12 @@
         <img :src="photo.photo_src" v-for="(photo,i) in photos" :key="i" class="h-96 w-full object-cover"
              :class="{'hidden':i !== currentPhoto}" loading="lazy">
         <PrimaryBtn class="p-1 border-none absolute top-1/2 -translate-y-1/2 left-1" type="outline"
-                    @click.prevent="minusOne"
-                    :is-disabled="isFirstPhoto">
+                    @click.prevent="minusOne" v-show="!isFirstPhoto">
             <PreviousIcon />
         </PrimaryBtn>
         <PrimaryBtn class="p-1 border-none absolute top-1/2 -translate-y-1/2 right-1" type="outline"
                     @click.prevent="addOne"
-                    :is-disabled="isLastPhoto">
+                    v-show="!isLastPhoto">
             <NextIcon />
         </PrimaryBtn>
     </div>
