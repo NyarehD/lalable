@@ -1,19 +1,19 @@
 <template>
     <div class="max-w-2xl mx-auto">
-        <Post v-for="post in posts" :post="post" />
+        <Post v-for="(post,i) in posts" :post="post" :key="i" />
     </div>
 </template>
+<script setup>
+    import Post from "@/Components/Post/Post.vue";
+
+    defineProps({
+        posts: Object,
+    });
+</script>
 <script>
     import PageLayout from "../Layouts/PageLayout.vue";
 
     export default {
         layout: PageLayout,
     };
-</script>
-<script setup>
-    import Post from "@/Components/Post.vue";
-
-    defineProps({
-        posts: Object,
-    });
 </script>
