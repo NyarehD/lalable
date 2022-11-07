@@ -20,9 +20,9 @@
                 <input class="w-full pr-10 bg-transparent focus:outline-none mt-1 ml-7">
             </div>
             <div class="flex items-center justify-end w-auto">
-                <div class="hidden md:block">
+                <div class="hidden md:blockmr-3">
                     <Link
-                        class="inline-flex items-center rounded-full bg-indigo-700 text-white px-3 h-9 hover:bg-indigo-900"
+                        class="inline-flex items-center primaryBtn"
                         href="post/create">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor" class="w-6 h-6">
@@ -32,8 +32,8 @@
                         <span class="ml-1">Post</span>
                     </Link>
                 </div>
-                <DarkModeButton class="mx-3" />
-                <div class="">
+                <DarkModeButton class="mr-3" />
+                <div class="mr-3" v-if="user">
                     <img :src="user.full_image_path" :alt="user.name" class="w-11 h-auto rounded-full">
                 </div>
                 <NavBarToggleBtn

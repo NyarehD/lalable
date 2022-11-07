@@ -3,23 +3,25 @@
           enctype="multipart/form-data">
         <h1 class="text-3xl font-semibold mb-4">Create Post</h1>
         <textarea name="description" id="description" rows="4" placeholder="Write something..."
-                  class="w-full rounded-3xl p-4 focus:outline-none border-none bg-gray-200 resize-none mb-4" v-model="form.description"></textarea>
+                  class="w-full rounded-3xl p-4 focus:outline-none border-none bg-gray-200 resize-none mb-4"
+                  v-model="form.description"></textarea>
         <PreviewPhoto :img-list="imgList" :errors="errors" />
         <div class="flex justify-between">
             <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUpload"
                    @input="uploadAndPreviewPhoto" multiple>
             <label for="photoUpload">
-                <button class="primaryBtn px-3" @click.prevent="fileUpload.click()">
+                <PrimaryBtn class="px-3">
                     <Media />
-                </button>
+                </PrimaryBtn>
             </label>
-            <button class="primaryBtn">Create Post</button>
+            <PrimaryBtn>Create Post</PrimaryBtn>
         </div>
     </form>
 </template>
 <script setup>
     import Media from "@/Components/Icons/Media.vue";
     import PreviewPhoto from "@/Components/PreviewPhoto.vue";
+    import PrimaryBtn from "@/Components/PrimaryBtn.vue";
     import { useForm } from "@inertiajs/inertia-vue3";
     import { ref } from "vue";
 
