@@ -40,9 +40,14 @@ class PostController extends Controller {
         }
 
         $request->validate([
-            "description" => "nullable|string",
+            "description" => "nullable|string|required_without:photos",
+            "photos" => "required_without:description",
             "photos.*" => "mimetypes:image/jpeg,image/png"
+        ], [
+            "description.required_without" => "desc Please either provide description or upload photos",
+            "photos.required_without" => "photo Please either provide description or upload photos",
         ]);
+
         $post = new Post();
         $post->description = $request['description'];
         $post->user_id = Auth::id();
