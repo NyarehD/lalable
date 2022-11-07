@@ -11,14 +11,12 @@
         <div class="px-4 pb-1" v-if="post.description">
             <p class="text-lg">{{ post.description }}</p>
         </div>
-        <div class="grid grid-cols-2" v-if="post.post_photos.length>0">
-            <img :src="photo.photo_src" v-for="photo in post.post_photos"
-                 class="h-[20rem] w-full object-cover"
-                 alt=" img">
-        </div>
+        <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>0" />
     </div>
 </template>
 <script setup>
+    import PhotoCarousel from "@/Components/PhotoCarousel.vue";
+
     defineProps({
         post: Object,
     });
