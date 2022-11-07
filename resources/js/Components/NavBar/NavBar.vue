@@ -36,6 +36,13 @@
                 <div class="mr-3" v-if="user">
                     <img :src="user.full_image_path" :alt="user.name" class="w-11 h-auto rounded-full">
                 </div>
+                <div class="mx-3" v-else>
+                    <PrimaryBtn type="outline">
+                        <Link href="/login">
+                            Login
+                        </Link>
+                    </PrimaryBtn>
+                </div>
                 <NavBarToggleBtn
                     @click="navBarToggle = !navBarToggle"
                     :toggle-status="navBarToggle"
@@ -70,6 +77,7 @@
     import NavBarToggleBtn from "./NavBarToggleBtn.vue";
     import DarkModeButton from "./DarkModeButton.vue";
     import { Link, usePage } from "@inertiajs/inertia-vue3";
+    import PrimaryBtn from "../PrimaryBtn.vue";
 
     const navBarToggle = ref(false);
 
