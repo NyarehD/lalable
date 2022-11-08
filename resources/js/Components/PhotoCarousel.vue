@@ -1,7 +1,8 @@
 <template>
     <div class="relative">
-        <img :src="photo.photo_src" v-for="(photo,i) in photos" :key="i" class="h-96 w-full object-cover"
-             :class="{'hidden':i !== currentPhoto}" loading="lazy">
+        <img :src="photo.photo_src" v-for="(photo,i) in photos" :key="i" class="w-full "
+             :class="{'object-cover h-96':!isFullHeight,'h-screen object-contain':isFullHeight}"
+             loading="lazy" v-show="i===currentPhoto">
         <PrimaryBtn class="p-1 border-none absolute top-1/2 -translate-y-1/2 left-1" type="outline"
                     @click.prevent="minusOne" v-show="!isFirstPhoto">
             <PreviousIcon />
@@ -20,8 +21,12 @@
     import NextIcon from "@/Components/Icons/NextIcon.vue";
     import PreviousIcon from "@/Components/Icons/PreviousIcon.vue";
 
-    const { photos } = defineProps({
+    const { photos, isFullHeight } = defineProps({
         photos: Object,
+        isFullHeight: {
+            type: Boolean,
+            default: false,
+        },
     });
 
     const currentPhoto = ref(0);
@@ -33,5 +38,4 @@
 </script>
 
 <style scoped>
-
 </style>
