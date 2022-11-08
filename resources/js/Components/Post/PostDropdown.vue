@@ -28,7 +28,7 @@
     });
     const isDropdownActive = ref(false);
 </script>
-<style lang="scss">
+<style>
     .fade {
         animation: fade 300ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     }

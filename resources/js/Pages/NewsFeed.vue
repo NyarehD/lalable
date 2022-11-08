@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-2xl mx-auto px-2">
         <Post v-for="(post,i) in posts" :post="post" :key="i" />
     </div>
 </template>
