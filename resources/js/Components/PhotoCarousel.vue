@@ -1,8 +1,10 @@
 <template>
     <div class="relative">
-        <img :src="photo.photo_src" v-for="(photo,i) in photos" :key="i" class="w-full "
-             :class="{'object-cover h-96':!isFullHeight,'h-screen object-contain':isFullHeight}"
-             loading="lazy" v-show="i===currentPhoto">
+        <div class="h-full">
+            <img :src="photo.photo_src" v-for="(photo,i) in photos" :key="i" class="w-full "
+                 :class="{'object-cover h-96':!isFullHeight,'h-screen object-contain':isFullHeight}"
+                 loading="lazy" v-show="i===currentPhoto">
+        </div>
         <PrimaryBtn class="p-1 border-none absolute top-1/2 -translate-y-1/2 left-1" type="outline"
                     @click.prevent="minusOne" v-show="!isFirstPhoto">
             <PreviousIcon />
