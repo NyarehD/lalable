@@ -10,8 +10,8 @@
                 <p class="text-lg">{{ post.description }}</p>
             </div>
         </div>
-        <PrimaryBtn type="text" class="absolute top-3 left-3 p-1 text-indigo-500">
-            <XMark/>
+        <PrimaryBtn type="text" class="absolute top-3 left-3 p-1 text-indigo-500" @click="goToNewsFeed">
+            <XMark />
         </PrimaryBtn>
     </div>
 </template>
@@ -21,10 +21,15 @@
     import PhotoCarousel from "@/Components/PhotoCarousel.vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
     import XMark from "@/Components/Icons/XMark.vue";
+    import { Inertia } from "@inertiajs/inertia";
 
     defineProps({
         post: Object,
     });
+
+    function goToNewsFeed() {
+        Inertia.visit("/");
+    }
 </script>
 <style scoped>
 
