@@ -7,7 +7,7 @@
                 <p>{{ post.for_humans }}</p>
             </div>
         </div>
-        <PostDropdown :post-id="post.id" />
+        <PostDropdown :post-id="post.id" :is-post-owner="post.can.is_post_owner"/>
     </div>
 </template>
 <script setup>

@@ -13,8 +13,12 @@ use Inertia\Inertia;
 
 class PostController extends Controller {
     public function index() {
+        $posts = Post::latest()->get()->map(function ($post) {
+            $post['can'] = ['is_post_owner' => Gate::allows("post_owner", $post)];
+            return $post;
+        });
         return Inertia::render("NewsFeed", [
-            'posts' => Post::latest()->get(),
+            'posts' => $posts,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,
