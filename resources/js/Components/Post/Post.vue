@@ -8,7 +8,7 @@
         </div>
         <img :src="post.post_photos[0].photo_src" class="max-h-80 md:max-h-[30rem] w-full object-cover"
              v-if="post.post_photos.length===1">
-        <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>1"/>
+        <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>1" />
     </div>
 </template>
 <script setup>

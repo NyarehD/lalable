@@ -28,7 +28,7 @@
     });
 
     function goToNewsFeed() {
-        Inertia.visit("/");
+        Inertia.visit("/", { preserveScroll: true, replace: true });
     }
 </script>
 <style scoped>
