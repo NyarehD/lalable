@@ -69,6 +69,7 @@ class PostController extends Controller {
     }
 
     public function show(Post $post) {
+        $post['can'] = ['is_post_owner' => Gate::allows("post_owner", $post)];
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 

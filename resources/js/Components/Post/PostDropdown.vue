@@ -1,22 +1,22 @@
 <template>
     <div class="relative" ref="dropdown">
-        <PrimaryBtn class="h-10 p-2" type="text" @click="isDropdownActive=!isDropdownActive">
+        <PrimaryBtn class="h-10 p-2" type="text" @click.stop="isDropdownActive=!isDropdownActive">
             <EllipsisVerticalIcon />
         </PrimaryBtn>
         <div class="absolute right-0 z-10 bg-white border-[1px] border-gray-500/20 rounded-3xl w-32"
              :class="{'fade':isDropdownActive}"
              v-show="isDropdownActive">
-            <Link :href="route('post.show',{id:postId})"
+            <Link @click.stop :href="route('post.show',{id:postId})"
                   class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer"
-                  v-if="route().current()!=='post.show'">
+                  v-if="route().current()!=='post.show'" preserve-scroll>
                 View
             </Link>
-            <Link v-if="isPostOwner" :href="route('post.edit',{id:postId})"
-                  class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer">
+            <Link @click.stop v-if="isPostOwner" :href="route('post.edit',{id:postId})"
+                  class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer" preserve-scroll>
                 Edit
             </Link>
-            <Link v-if="isPostOwner"
-                class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer">
+            <Link @click.stop v-if="isPostOwner"
+                class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer" preserve-scroll>
                 Delete
             </Link>
         </div>

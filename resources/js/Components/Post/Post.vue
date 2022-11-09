@@ -1,6 +1,7 @@
 <template>
     <div
-        class="border-x-[1px] border-b-[1px] border-gray-500/20 first-of-type:border-t-2 first-of-type:rounded-t-3xl last-of-type:rounded-b-3xl">
+        class="border-x-[1px] border-b-[1px] border-gray-500/20 first-of-type:border-t-2 first-of-type:rounded-t-3xl last-of-type:rounded-b-3xl hover:cursor-pointer hover:bg-gray-200/60 transition-colors duration-300"
+        @click.stop="goToPost">
         <PostProfile :post="post" />
         <div class="px-4 pb-1" v-if="post.description">
             <p class="text-lg">{{ post.description }}</p>
@@ -13,10 +14,15 @@
 <script setup>
     import PhotoCarousel from "@/Components/PhotoCarousel.vue";
     import PostProfile from "@/Components/Post/PostProfile.vue";
+    import { Inertia } from "@inertiajs/inertia";
 
-    defineProps({
+    const props = defineProps({
         post: Object,
     });
+
+    function goToPost() {
+        Inertia.visit(route("post.show", { id: props.post.id }), { preserveScroll: true });
+    }
 </script>
 <style>
 </style>
