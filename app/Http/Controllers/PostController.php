@@ -65,7 +65,6 @@ class PostController extends Controller {
     }
 
     public function show(Post $post) {
-        $post = $post->post_photos;
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
