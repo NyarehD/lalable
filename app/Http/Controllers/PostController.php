@@ -48,8 +48,8 @@ class PostController extends Controller {
             "photos" => "required_without:description",
             "photos.*" => "mimetypes:image/jpeg,image/png"
         ], [
-            "description.required_without" => "desc Please either provide description or upload photos",
-            "photos.required_without" => "photo Please either provide description or upload photos",
+            "description.required_without" => "Please either provide description or upload photos",
+            "photos.required_without" => "Please either provide description or upload photos",
         ]);
 
         $post = new Post();
@@ -75,12 +75,41 @@ class PostController extends Controller {
 
     public function edit(Post $post) {
         if (Gate::allows("post_owner", $post)) {
-            return Inertia::render("Post/PostEdit", ["post" => [$post, $post->post_photos()]]);
+            return Inertia::render("Post/PostEdit", ["post" => $post]);
         }
         return abort(403);
     }
 
     public function update(Request $request, Post $post) {
+        if (Gate::allows("post_owner", $post)) {
+            if ($request->hasFile("photos.*")) {
+                $fileNameArr = [];
+                foreach ($request->file("photos.*") as $file) {
+                    $newName = uniqid() . "_photos." . $file->getClientOriginalExtension();
+                    array_push($fileNameArr, $newName);
+                    $file->storeAs('public/post', $newName);
+                }
+            }
+
+            $request->validate([
+                "description" => "nullable|string",
+                "photos.*" => "mimetypes:image/jpeg,image/png",
+            ]);
+
+            $post->description = $request['description'];
+            $post->update();
+
+            if (isset($fileNameArr)) {
+                foreach ($fileNameArr as $fileName) {
+                    $postPhoto = new PostPhoto();
+                    $postPhoto->post_id = $post->id;
+                    $postPhoto->filename = $fileName;
+                    $postPhoto->save();
+                }
+            }
+            return redirect()->route("newsfeed");
+        }
+        return abort(403);
     }
 
     public function destroy(Post $post) {
