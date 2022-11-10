@@ -16,17 +16,14 @@
                   preserve-scroll>
                 Edit
             </Link>
-            <Link @click.stop v-if="isPostOwner"
-                  class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer"
-                  preserve-scroll>
-                Delete
-            </Link>
+            <PostDropdownDelete :post-id="postId" v-if="isPostOwner" />
         </div>
     </div>
 </template>
 <script setup>
     import EllipsisVerticalIcon from "@/Components/Icons/EllipsisVerticalIcon.vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
+    import PostDropdownDelete from "@/Components/Post/PostDropdownDelete.vue";
     import { Link } from "@inertiajs/inertia-vue3";
     import { ref } from "vue";
     import { onClickOutside } from "@vueuse/core";
