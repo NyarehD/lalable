@@ -3,7 +3,7 @@
         class="border-x-[1px] border-b-[1px] border-gray-500/20 first-of-type:border-t-2 first-of-type:rounded-t-3xl last-of-type:rounded-b-3xl hover:cursor-pointer hover:bg-gray-200/60 transition-colors duration-300"
         @click.stop="goToPost">
         <PostProfile :post="post" />
-        <div class="px-4 pb-1" v-if="post.description">
+        <div class="px-4 pb-3" v-if="post.description">
             <p class="text-lg">{{ post.description }}</p>
         </div>
         <img :src="post.post_photos[0].photo_src" class="h-80 md:h-[30rem] w-full object-cover"

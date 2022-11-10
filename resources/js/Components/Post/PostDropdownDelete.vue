@@ -26,6 +26,7 @@
                     Inertia.reload({ only: ["posts"] });
                 }
             },
+            preserveScroll: true,
         });
     }
 </script>
