@@ -7,7 +7,7 @@
                   v-model="form.description"></textarea>
         <InputError :message="errors.description" v-if="errors.description" />
         <PreviewPhoto :img-list="imgList" :errors="errors" />
-        <InputError :message="errors.photos" v-if="errors.photos"/>
+        <InputError :message="errors.photos" v-if="errors.photos" />
         <div class="flex justify-between">
             <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUpload"
                    @input="uploadAndPreviewPhoto" multiple>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Storage;
 
 class PostController extends Controller {
     public function index() {
@@ -113,5 +114,18 @@ class PostController extends Controller {
     }
 
     public function destroy(Post $post) {
+        if (Gate::allows('post_owner', $post)) {
+            if (isset($post->post_photos)) {
+                foreach ($post->post_photos as $photo) {
+                    Storage::delete('/public/post/' . $photo->filename);
+                }
+                $toDelete = $post->post_photos->pluck("id");
+                PostPhoto::destroy($toDelete);
+            }
+            $post->delete();
+            return response('', 200);
+        } else {
+            return abort(404);
+        }
     }
 }
