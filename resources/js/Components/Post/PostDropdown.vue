@@ -12,11 +12,13 @@
                 View
             </Link>
             <Link @click.stop v-if="isPostOwner" :href="route('post.edit',{id:postId})"
-                  class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer" preserve-scroll>
+                  class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer"
+                  preserve-scroll>
                 Edit
             </Link>
             <Link @click.stop v-if="isPostOwner"
-                class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer" preserve-scroll>
+                  class="py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer"
+                  preserve-scroll>
                 Delete
             </Link>
         </div>
@@ -31,7 +33,7 @@
 
     defineProps({
         postId: Number,
-        isPostOwner: Boolean
+        isPostOwner: Boolean,
     });
     const isDropdownActive = ref(false);
 
