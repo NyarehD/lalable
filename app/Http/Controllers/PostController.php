@@ -14,7 +14,7 @@ use Storage;
 
 class PostController extends Controller {
     public function index() {
-        $posts = Post::latest()->get()->map(function ($post) {
+        $posts = Post::latest()->withCount(['total_likes'])->get()->map(function ($post) {
             $post['can'] = ['is_post_owner' => Gate::allows("post_owner", $post)];
             return $post;
         });

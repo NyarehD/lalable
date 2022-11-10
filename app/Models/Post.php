@@ -21,6 +21,10 @@ class Post extends Model {
         return $this->belongsTo(User::class, "user_id")->select("name", "id", "profile_picture");
     }
 
+    public function total_likes() {
+        return $this->hasMany(Like::class, "post_id");
+    }
+
     protected function forHumans(): Attribute {
         return new Attribute(get: fn() => $this->created_at->diffForHumans());
     }
