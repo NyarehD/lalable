@@ -1,6 +1,6 @@
 <template>
     <div class="max-w-2xl mx-auto px-2">
-        <Post v-for="(post,i) in posts" :post="post" :key="i" />
+        <Post v-for="(post) in posts" :post="post" :key="post.id" />
     </div>
 </template>
 <script setup>
