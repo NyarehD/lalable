@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\PostPhoto;
+use App\Rules\PostExistsRule;
+use App\Rules\UserHasLikedRule;
+use App\Rules\UserHasNotLikedRule;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +18,10 @@ use Storage;
 
 class PostController extends Controller {
     public function index() {
-        $posts = Post::latest()->withCount(['total_likes'])->get()->map(function ($post) {
+        $posts = Post::latest()->get()->map(function ($post) {
             $post['can'] = ['is_post_owner' => Gate::allows("post_owner", $post)];
+            $post['user_liked'] = $post->total_likes->where("user_id", Auth::id())->count() > 0;
+            $post['total_likes_count'] = $post->total_likes->count();
             return $post;
         });
         return Inertia::render("NewsFeed", [
@@ -127,5 +133,24 @@ class PostController extends Controller {
         } else {
             return abort(404);
         }
+    }
+
+    public function like(Request $request) {
+        $request->validate([
+            "post_id" => [new UserHasNotLikedRule(), new PostExistsRule()]
+        ]);
+        $like = new Like();
+        $like->post_id = $request->post_id;
+        $like->user_id = Auth::id();
+        $like->save();
+        return response('', 200);
+    }
+
+    public function unlike(Request $request) {
+        $request->validate([
+            "post_id" => [new PostExistsRule(), new UserHasLikedRule()],
+        ]);
+        Like::where("user_id", Auth::id())->where("post_id", $request['post_id'])->delete();
+        return response('', 200);
     }
 }

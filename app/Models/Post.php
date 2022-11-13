@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model {
     use HasFactory;
 
-    protected $with = ["post_photos", "owner"];
+    protected $with = ["post_photos", "owner","total_likes"];
 
     protected $appends = ["for_humans"];
 
