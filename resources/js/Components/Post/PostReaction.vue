@@ -1,0 +1,52 @@
+<template>
+    <div class="flex p-1 justify-between">
+        <div class="flex w-72">
+            <button
+                class="inline-flex justify-center items-center bg-transparent w-1/3 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300"
+                @click.stop.prevent="toggleLike">
+                <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
+                    <LikeSolid v-if="userLiked" class="text-indigo-500"/>
+                    <LikeOutline v-else />
+                </a>
+                {{ totalLikes }} Like
+            </button>
+            <button
+                class="inline-flex justify-center items-center bg-transparent w-1/3 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
+                <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-2">
+                    <LikeOutline class="" />
+                </a>
+                Like
+            </button>
+            <button
+                class="inline-flex justify-center items-center bg-transparent w-1/3 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
+                <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-2">
+                    <LikeOutline class="" />
+                </a>
+                Like
+            </button>
+        </div>
+        <div class="flex items-center">
+            Shares
+        </div>
+    </div>
+</template>
+<script setup>
+    import LikeOutline from "@/Components/Icons/LikeOutline.vue";
+    import LikeSolid from "@/Components/Icons/LikeSolid.vue";
+    import { Inertia } from "@inertiajs/inertia";
+
+    const props = defineProps({
+        postId: Number,
+        totalLikes: Number,
+        userLiked: Boolean,
+    });
+
+    function toggleLike() {
+        Inertia.post(route(props.userLiked ? "post.unlike" : "post.like"), { "post_id": props.postId }, {
+            onFinish: () => {
+                Inertia.reload(["posts"]);
+            },
+            preserveScroll: true,
+        });
+    }
+</script>

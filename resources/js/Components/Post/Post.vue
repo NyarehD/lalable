@@ -9,40 +9,13 @@
         <img :src="post.post_photos[0].photo_src" class="h-80 md:h-[30rem] w-full object-cover"
              v-if="post.post_photos.length===1">
         <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>1" />
-        <div class="flex p-1 justify-between">
-            <div class="flex w-72">
-                <button
-                    class="inline-flex justify-center items-center bg-transparent w-1/3 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
-                    <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-2">
-                        <LikeOutline class="" />
-                    </a>
-                    Like
-                </button>
-                <button
-                    class="inline-flex justify-center items-center bg-transparent w-1/3 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
-                    <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-2">
-                        <LikeOutline class="" />
-                    </a>
-                    Like
-                </button>
-                <button
-                    class="inline-flex justify-center items-center bg-transparent w-1/3 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
-                    <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-2">
-                        <LikeOutline class="" />
-                    </a>
-                    Like
-                </button>
-            </div>
-            <div class="flex items-center">
-                Shares
-            </div>
-        </div>
+        <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" />
     </div>
 </template>
 <script setup>
     import PhotoCarousel from "@/Components/PhotoCarousel.vue";
     import PostProfile from "@/Components/Post/PostProfile.vue";
-    import LikeOutline from "@/Components/Icons/LikeOutline.vue";
+    import PostReaction from "@/Components/Post/PostReaction.vue";
     import { Inertia } from "@inertiajs/inertia";
 
     const props = defineProps({
@@ -50,8 +23,6 @@
     });
 
     function goToPost() {
-        Inertia.visit(route("post.show", { id: props.post.id }), { preserveScroll: true });
+        Inertia.post(route("post.show", { post_id: props.post.id }), { preserveScroll: true });
     }
 </script>
-<style>
-</style>
