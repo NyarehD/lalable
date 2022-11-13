@@ -13,6 +13,7 @@
                 <div class="px-4 pb-3" v-if="post.description">
                     <p class="text-lg">{{ post.description }}</p>
                 </div>
+                <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" />
             </div>
             <PrimaryBtn type="text" class="absolute top-3 left-3 p-1 text-indigo-500" @click="goToNewsFeed">
                 <XMark />
@@ -32,6 +33,7 @@
     import PostProfile from "@/Components/Post/PostProfile.vue";
     import PhotoCarousel from "@/Components/PhotoCarousel.vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
+    import PostReaction from "@/Components/Post/PostReaction.vue";
     import Post from "@/Components/Post/Post.vue";
     import XMark from "@/Components/Icons/XMark.vue";
     import { Inertia } from "@inertiajs/inertia";
