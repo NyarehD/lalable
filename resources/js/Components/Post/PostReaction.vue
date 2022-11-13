@@ -6,7 +6,7 @@
                 :class="{'text-indigo-500':userLiked,'text-gray-900/80':!userLiked}"
                 @click.stop.prevent="toggleLike">
                 <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
-                    <LikeSolid v-if="userLiked" class="text-indigo-500"/>
+                    <LikeSolid v-if="userLiked" class="text-indigo-500" />
                     <LikeOutline v-else />
                 </a>
                 {{ totalLikes }} Like
@@ -44,9 +44,6 @@
 
     function toggleLike() {
         Inertia.post(route(props.userLiked ? "post.unlike" : "post.like"), { "post_id": props.postId }, {
-            onFinish: () => {
-                Inertia.reload(["posts"]);
-            },
             preserveScroll: true,
         });
     }
