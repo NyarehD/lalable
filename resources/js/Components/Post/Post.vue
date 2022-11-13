@@ -23,6 +23,6 @@
     });
 
     function goToPost() {
-        Inertia.post(route("post.show", { post_id: props.post.id }), { preserveScroll: true });
+        Inertia.visit(route("post.show", { id: props.post.id }), { preserveScroll: true });
     }
 </script>
