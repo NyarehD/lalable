@@ -28,6 +28,9 @@ class AuthServiceProvider extends ServiceProvider {
         Gate::define("post_owner", function (User $user, Post $post) {
             return $user->id === $post->user_id;
         });
+        Gate::define("is_original_post", function (User $user, Post $post) {
+            return $post->original_post_id === null;
+        });
         //
     }
 }

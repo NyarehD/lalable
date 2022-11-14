@@ -20,7 +20,7 @@ class PostController extends Controller {
     public function index() {
         $posts = Post::latest()->get()->map(function ($post) {
             $post['can'] = ['is_post_owner' => Gate::allows("post_owner", $post)];
-            $post['user_liked'] = $post->total_likes->where("user_id", Auth::id())->count() > 0;
+            $post['user_liked'] = $post->total_likes->where("user_id", auth()->id())->count() > 0;
             $post['total_likes_count'] = $post->total_likes->count();
             return $post;
         });
@@ -154,5 +154,22 @@ class PostController extends Controller {
         ]);
         Like::where("user_id", Auth::id())->where("post_id", $request['post_id'])->delete();
         return response('', 200);
+    }
+
+    public function share(Request $request) {
+        $request->validate([
+            "post_id" => [new PostExistsRule()],
+            'description' => "nullable|string"
+        ]);
+        $post = Post::findOrFail($request->post_id);
+        if (Gate::allows("is_original_post", $post)) {
+            $newPost = new Post();
+            $newPost->user_id = Auth::id();
+            $newPost->original_post_id = $post->id;
+            $newPost->description = $request['description'];
+            $newPost->save();
+            return response('', 200);
+        }
+        return response("You cannot share a shared post", 403);
     }
 }

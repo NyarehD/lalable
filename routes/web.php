@@ -18,10 +18,11 @@ use Inertia\Inertia;
 Route::get('/', [PostController::class, "index"])->name("newsfeed");
 Route::middleware("auth")->group(function () {
     Route::resource("/post", PostController::class);
-
-    // Like
-    Route::post("/like", [PostController::class, "like"])->name("post.like");
-    Route::post("/unlike", [PostController::class, "unlike"])->name("post.unlike");
+    Route::controller(PostController::class)->prefix("/post")->group(function () {
+        Route::post("/like", "like")->name("post.like");
+        Route::post("/unlike", "unlike")->name("post.unlike");
+        Route::post("/share", "share")->name("post.share");
+    });
 });
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

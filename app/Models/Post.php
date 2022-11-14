@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model {
     use HasFactory;
 
-    protected $with = ["post_photos", "owner","total_likes"];
+    protected $with = ["post_photos", "owner","total_likes","original_post.post_photos"];
 
     protected $appends = ["for_humans"];
 
@@ -23,6 +23,10 @@ class Post extends Model {
 
     public function total_likes() {
         return $this->hasMany(Like::class, "post_id");
+    }
+
+    public function original_post() {
+        return $this->belongsTo(Post::class, "original_post_id");
     }
 
     protected function forHumans(): Attribute {
