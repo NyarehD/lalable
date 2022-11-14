@@ -8,7 +8,7 @@
                 <LikeSolid v-if="userLiked" class="text-indigo-500" />
                 <LikeOutline v-else />
             </a>
-            {{ totalLikes }} Like
+            {{ totalLikes }} {{ totalLikes > 1? "Likes":"Like" }}
         </button>
         <button
             class="inline-flex justify-center mx-auto items-center bg-transparent w-1/8 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
