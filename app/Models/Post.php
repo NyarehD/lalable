@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Gate;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model {
     use HasFactory;
 
-    protected $with = ["post_photos", "owner","total_likes","original_post.post_photos"];
+    protected $with = ["post_photos", "owner", "total_likes"];
 
     protected $appends = ["for_humans", "can", "user_liked","total_likes_count"];
 

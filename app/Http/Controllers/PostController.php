@@ -18,7 +18,7 @@ use Storage;
 
 class PostController extends Controller {
     public function index() {
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->with(["original_post"])->get();
         return Inertia::render("NewsFeed", [
             'posts' => $posts,
             'canLogin' => Route::has('login'),
