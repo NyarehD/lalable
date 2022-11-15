@@ -18,12 +18,7 @@ use Storage;
 
 class PostController extends Controller {
     public function index() {
-        $posts = Post::latest()->get()->map(function ($post) {
-            $post['can'] = ['is_post_owner' => Gate::allows("post_owner", $post)];
-            $post['user_liked'] = $post->total_likes->where("user_id", auth()->id())->count() > 0;
-            $post['total_likes_count'] = $post->total_likes->count();
-            return $post;
-        });
+        $posts = Post::latest()->get();
         return Inertia::render("NewsFeed", [
             'posts' => $posts,
             'canLogin' => Route::has('login'),

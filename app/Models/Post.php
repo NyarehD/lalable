@@ -11,7 +11,7 @@ class Post extends Model {
 
     protected $with = ["post_photos", "owner","total_likes","original_post.post_photos"];
 
-    protected $appends = ["for_humans"];
+    protected $appends = ["for_humans", "can", "user_liked","total_likes_count"];
 
     public function post_photos() {
         return $this->hasMany(PostPhoto::class);
@@ -31,5 +31,17 @@ class Post extends Model {
 
     protected function forHumans(): Attribute {
         return new Attribute(get: fn() => $this->created_at->diffForHumans());
+    }
+
+    protected function can(): Attribute {
+        return new Attribute(get: fn() => ['is_post_owner' => Gate::allows("post_owner", $this)]);
+    }
+
+    protected function userLiked(): Attribute {
+        return new Attribute(get: fn() => $this->total_likes->where("user_id", auth()->id())->count() > 0);
+    }
+
+    protected function totalLikesCount(): Attribute {
+        return new Attribute(get: fn() => $this->total_likes->count());
     }
 }
