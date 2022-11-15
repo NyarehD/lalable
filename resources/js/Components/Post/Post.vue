@@ -6,9 +6,24 @@
         <div class="px-4 pb-3" v-if="post.description">
             <p class="text-lg">{{ post.description }}</p>
         </div>
-        <img :src="post.post_photos[0].photo_src" class="h-80 md:h-[30rem] w-full object-cover"
-             v-if="post.post_photos.length===1">
-        <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>1" />
+        <template v-if="!post.original_post">
+            <img :src="post.post_photos[0].photo_src" class="h-80 md:h-[30rem] w-full object-cover"
+                 v-if="post.post_photos.length===1">
+            <PhotoCarousel :photos="post.post_photos" v-if="post.post_photos.length>1" />
+        </template>
+        <!--        Section for shared post -->
+        <template v-else>
+            <img :src="post.original_post.post_photos[0].photo_src" class="h-80 md:h-[30rem] w-full object-cover"
+                 v-if="post.original_post.post_photos.length===1">
+            <PhotoCarousel :photos="post.original_post.post_photos" v-if="post.original_post.post_photos.length>1" />
+            <div class="mx-3 border-x-[1px] border-b-[1px] rounded-b-3xl"
+            :class="{'border-t-[1px] rounded-t-3xl':post.original_post.post_photos.length===0}">
+                <PostProfile :post="post.original_post" />
+                <div class="px-4 pb-3" v-if="post.original_post.description">
+                    <p class="text-lg">{{ post.original_post.description }}</p>
+                </div>
+            </div>
+        </template>
         <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" />
     </div>
 </template>
