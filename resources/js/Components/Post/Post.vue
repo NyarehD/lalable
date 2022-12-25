@@ -1,6 +1,6 @@
 <template>
     <div
-        class="border-x-[1px] border-b-[1px] border-gray-500/20 first-of-type:border-t-2 first-of-type:rounded-t-3xl last-of-type:rounded-b-3xl hover:cursor-pointer hover:bg-gray-200/60 transition-colors duration-300"
+        class="bg-white border-x-[1px] border-b-[1px] border-gray-500/20 first-of-type:border-t-2 first-of-type:rounded-t-3xl last-of-type:rounded-b-3xl hover:cursor-pointer hover:bg-gray-200/50 transition-colors duration-300"
         @click.stop="goToPost">
         <PostProfile :post="post" />
         <div class="px-4 pb-3" v-if="post.description">
@@ -16,7 +16,7 @@
             <img :src="post.original_post.post_photos[0].photo_src" class="h-80 md:h-[30rem] w-full object-cover"
                  v-if="post.original_post.post_photos.length===1">
             <PhotoCarousel :photos="post.original_post.post_photos" v-if="post.original_post.post_photos.length>1" />
-            <div class="mx-3 border-x-[1px] border-b-[1px] rounded-b-3xl"
+            <div class="bg-white hover:bg-white/10 mx-3 border-x-[1px] border-b-[1px] rounded-b-3xl"
             :class="{'border-t-[1px] rounded-t-3xl':post.original_post.post_photos.length===0}">
                 <PostProfile :post="post.original_post" />
                 <div class="px-4 pb-3" v-if="post.original_post.description">
