@@ -12,8 +12,8 @@ class PostFactory extends Factory {
     public function definition(): array {
         return [
             'description' => $this->faker->text(),
-            'user_id' => $this->faker->randomNumber(),
-            'original_post_id' => $this->faker->randomNumber(),
+            'user_id' => 1,
+            'original_post_id' => $this->faker->numberBetween(0, 3),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
