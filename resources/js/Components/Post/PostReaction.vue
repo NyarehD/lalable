@@ -15,7 +15,7 @@
             <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
                 <LikeOutline class="" />
             </a>
-            Like
+            Comment
         </button>
         <button
             class="w-1/3 inline-flex justify-center items-center bg-transparent w-1/6 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300"
