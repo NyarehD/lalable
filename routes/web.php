@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,12 +18,18 @@ use Inertia\Inertia;
 
 Route::get('/', [PostController::class, "index"])->name("newsfeed");
 Route::middleware("auth")->group(function () {
-    Route::resource("/post", PostController::class);
-    Route::controller(PostController::class)->prefix("/post")->group(function () {
-        Route::post("/like", "like")->name("post.like");
-        Route::post("/unlike", "unlike")->name("post.unlike");
-        Route::post("/share", "share")->name("post.share");
+    Route::prefix("/post")->group(function () {
+        Route::resource("", PostController::class);
+        Route::controller(PostController::class)->group(function () {
+            Route::post("/like", "like")->name("post.like");
+            Route::post("/unlike", "unlike")->name("post.unlike");
+            Route::post("/share", "share")->name("post.share");
+            Route::controller(CommentController::class)->prefix("comment")->group(function () {
+                Route::post("/create", "store")->name("comment.create");
+            });
+        });
     });
+
 });
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
