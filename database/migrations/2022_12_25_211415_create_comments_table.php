@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Comment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId("user_id")->constrained();
             $table->foreignId("post_id")->constrained();
+            $table->foreignId("parent_id")->nullable()->constrained("comments");
             $table->longText("comment");
             $table->timestamps();
         });
