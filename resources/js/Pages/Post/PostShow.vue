@@ -14,6 +14,7 @@
                     <p class="text-lg">{{ post.description }}</p>
                 </div>
                 <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" />
+                <CommentSection :post-id="post.id" :comments="post.comments"/>
             </div>
             <PrimaryBtn type="text" class="absolute top-3 left-3 p-1 text-indigo-500" @click="goToNewsFeed">
                 <XMark />
@@ -38,6 +39,7 @@
     import XMark from "@/Components/Icons/XMark.vue";
     import { Inertia } from "@inertiajs/inertia";
     import PageLayout from "@/Layouts/PageLayout.vue";
+    import CommentSection from "@/Components/CommentSection.vue";
 
     defineProps({
         post: Object,

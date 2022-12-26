@@ -25,7 +25,7 @@ Route::middleware("auth")->group(function () {
             Route::post("/unlike", "unlike")->name("post.unlike");
             Route::post("/share", "share")->name("post.share");
             Route::controller(CommentController::class)->prefix("comment")->group(function () {
-                Route::post("/create", "store")->name("comment.create");
+                Route::post("/store", "store")->name("comment.store");
             });
         });
     });

@@ -15,6 +15,6 @@
 </script>
 
 <template>
-    <input class="rounded-3xl p-3 h-11 focus:outline-none focus:ring-1 focus:ring-blue-600 border-none bg-gray-200"
+    <input class="rounded-3xl py-3 px-4 h-11 focus:outline-none focus:ring-1 focus:ring-blue-600 border-none bg-gray-200"
            :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input">
 </template>
