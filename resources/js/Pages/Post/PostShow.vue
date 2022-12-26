@@ -1,14 +1,14 @@
 <template>
     <!--    Do not search for solutions for overflowing in this page. That overflow is caused by laravel debug bar by adding margin-bottom: 3px to body-->
     <template v-if="post.post_photos.length>0">
-        <div class="flex rounded-3xl relative">
-            <div class="w-3/4" v-if="post.post_photos.length>1">
+        <div class="flex flex-col md:flex-row overflow-x-hidden max-h-screen rounded-3xl relative">
+            <div class="md:w-7/12 lg:w-2/3" v-if="post.post_photos.length>1">
                 <PhotoCarousel :photos="post.post_photos" :is-full-height="true" v-show="true" />
             </div>
-            <div class="w-3/4" v-else>
-                <img :src="post.post_photos[0]?.photo_src" alt="" class="h-screen mx-auto">
+            <div class="md:w-7/12 lg:w-2/3" v-else>
+                <img :src="post.post_photos[0]?.photo_src" alt="" class="object-contain h-screen mx-auto">
             </div>
-            <div class="border-l-[1px] border-inherit w-1/4 rounded-r-3xl">
+            <div class="border-l-[1px] border-inherit md:w-5/12 lg:w-1/3 rounded-r-3xl">
                 <PostProfile :post="post" />
                 <div class="px-4 pb-3" v-if="post.description">
                     <p class="text-lg">{{ post.description }}</p>
