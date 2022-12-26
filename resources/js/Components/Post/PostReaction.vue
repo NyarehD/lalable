@@ -2,23 +2,23 @@
     <div class="flex p-1.5 justify-around">
         <button
             class="w-full inline-flex justify-center items-center bg-transparent font-semibold group hover:text-indigo-500 transition-colors duration-300"
-            :class="{'text-indigo-500':userLiked,'text-gray-900/80':!userLiked}"
+            :class="{'text-indigo-600':userLiked,'text-gray-900/80':!userLiked}"
             @click.stop.prevent="toggleLike">
             <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
-                <LikeSolid v-if="userLiked" class="text-indigo-500" />
+                <LikeSolid v-if="userLiked" class="text-indigo-600" />
                 <LikeOutline v-else />
             </a>
             {{ totalLikes }} {{ totalLikes > 1 ? "Likes" : "Like" }}
         </button>
         <button
-            class="w-full inline-flex justify-center items-center bg-transparent font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
+            class="w-full inline-flex justify-center items-center bg-transparent font-semibold text-gray-900/80 group hover:text-indigo-600 transition-colors duration-300">
             <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
                 <CommentIcon class="" />
             </a>
             Comment
         </button>
         <button
-            class="w-full inline-flex justify-center items-center bg-transparent font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300"
+            class="w-full inline-flex justify-center items-center bg-transparent font-semibold text-gray-900/80 group hover:text-indigo-600 transition-colors duration-300"
             @click.stop.prevent="sharePost">
             <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
                 <ShareIcon />
