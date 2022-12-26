@@ -18,7 +18,7 @@ use Inertia\Inertia;
 
 Route::get('/', [PostController::class, "index"])->name("newsfeed");
 Route::middleware("auth")->group(function () {
-    Route::resource("/post", PostController::class);
+    Route::resource("/post", PostController::class)->except("index");
     Route::prefix("/post")->group(function () {
         Route::controller(PostController::class)->group(function () {
             Route::post("/like", "like")->name("post.like");
