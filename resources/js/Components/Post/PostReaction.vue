@@ -1,7 +1,7 @@
 <template>
-    <div class="flex p-1.5 justify-between">
+    <div class="flex p-1.5 justify-around">
         <button
-            class="w-1/3 inline-flex justify-center items-center bg-transparent w-1/6 font-semibold group hover:text-indigo-500 transition-colors duration-300"
+            class="w-full inline-flex justify-center items-center bg-transparent font-semibold group hover:text-indigo-500 transition-colors duration-300"
             :class="{'text-indigo-500':userLiked,'text-gray-900/80':!userLiked}"
             @click.stop.prevent="toggleLike">
             <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
@@ -11,14 +11,14 @@
             {{ totalLikes }} {{ totalLikes > 1 ? "Likes" : "Like" }}
         </button>
         <button
-            class="w-1/3 inline-flex justify-center items-center bg-transparent w-1/6 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
+            class="w-full inline-flex justify-center items-center bg-transparent font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300">
             <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
-                <LikeOutline class="" />
+                <CommentIcon class="" />
             </a>
             Comment
         </button>
         <button
-            class="w-1/3 inline-flex justify-center items-center bg-transparent w-1/6 font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300"
+            class="w-full inline-flex justify-center items-center bg-transparent font-semibold text-gray-900/80 group hover:text-indigo-500 transition-colors duration-300"
             @click.stop.prevent="sharePost">
             <a class="rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80 p-2 mr-1">
                 <ShareIcon />
@@ -32,6 +32,7 @@
     import LikeSolid from "@/Components/Icons/LikeSolid.vue";
     import ShareIcon from "@/Components/Icons/ShareIcon.vue";
     import { Inertia } from "@inertiajs/inertia";
+    import CommentIcon from "@/Components/Icons/CommentIcon.vue";
 
     const props = defineProps({
         postId: Number,
