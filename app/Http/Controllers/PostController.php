@@ -71,9 +71,6 @@ class PostController extends Controller {
     }
 
     public function show(Post $post) {
-        $post['can'] = ['is_post_owner' => Gate::allows("post_owner", $post)];
-        $post['user_liked'] = $post->total_likes->where("user_id", Auth::id())->count() > 0;
-        $post['total_likes_count'] = $post->total_likes->count();
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
