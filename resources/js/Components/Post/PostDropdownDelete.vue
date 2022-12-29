@@ -1,8 +1,8 @@
 <template>
-    <a @click.prevent.stop="doesPopUpShow=true"
-       class="w-full py-2 px-6 hover:bg-indigo-200/80 active:bg-indigo-300/80 first-of-type:rounded-t-3xl block last-of-type:rounded-b-3xl transition-colors duration-300 cursor-pointer">
+    <button @click.prevent.stop="doesPopUpShow=true"
+            class="dropdownButton">
         Delete
-    </a>
+    </button>
     <Teleport to="body">
         <div v-if="doesPopUpShow"
              class="fixed rounded-3xl bg-white/95 backdrop-blur-2xl p-8 top-1/3 left-1/2 -translate-x-1/2 w-96 drop-shadow-2xl">
