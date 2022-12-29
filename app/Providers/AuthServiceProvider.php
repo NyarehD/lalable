@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Gate;
@@ -31,6 +32,9 @@ class AuthServiceProvider extends ServiceProvider {
         Gate::define("is_original_post", function (User $user, Post $post) {
             return $post->original_post_id === null;
         });
-        //
+        Gate::define("comment_owner", function (User $user, Comment $comment) {
+            return $user->id === $comment->user->id;
+        });
+
     }
 }

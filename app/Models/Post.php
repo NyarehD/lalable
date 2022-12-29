@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Gate;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,11 +32,11 @@ class Post extends Model {
     }
 
     public function comments() {
-        return $this->hasMany(Comment::class, "post_id");
+        return $this->hasMany(Comment::class, "post_id")->latest();
     }
 
     protected function forHumans(): Attribute {
-        return new Attribute(get: fn() => $this->created_at->diffForHumans());
+        return new Attribute(get: fn() => $this->created_at->diffForHumans(["syntax" => CarbonInterface::DIFF_ABSOLUTE]));
     }
 
     protected function can(): Attribute {
