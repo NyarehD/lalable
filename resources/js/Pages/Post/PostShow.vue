@@ -8,13 +8,13 @@
             <div class="md:w-7/12 lg:w-2/3" v-else>
                 <img :src="post.post_photos[0]?.photo_src" alt="" class="object-contain h-screen mx-auto">
             </div>
-            <div class="border-l-[1px] border-inherit md:w-5/12 lg:w-1/3 rounded-r-3xl max-h-screen overflow-auto">
+            <div class="border-l-[1px] border-inherit max-h-screen flex flex-col md:w-5/12 lg:w-1/3 rounded-r-3xl">
                 <PostProfile :post="post" />
                 <div class="px-4 pb-3" v-if="post.description">
                     <p class="text-lg">{{ post.description }}</p>
                 </div>
                 <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" />
-                <CommentSection :post-id="post.id" :comments="post.comments" />
+                <CommentSection :post-id="post.id" :comments="post.comments" class="flex-grow overflow-auto" />
             </div>
             <PrimaryBtn type="text" class="absolute top-3 left-3 p-1 text-indigo-500" @click="goToNewsFeed">
                 <XMark />
