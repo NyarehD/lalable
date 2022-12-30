@@ -26,6 +26,8 @@ Route::middleware("auth")->group(function () {
             Route::post("/share", "share")->name("post.share");
             Route::controller(CommentController::class)->prefix("comment")->group(function () {
                 Route::post("/store", "store")->name("comment.store");
+                Route::delete("/delete/{comment}", "destroy")->name("comment.destroy");
+                Route::patch("/update/{comment}", "update")->name("comment.update");
             });
         });
     });

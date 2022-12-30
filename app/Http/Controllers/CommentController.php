@@ -22,6 +22,15 @@ class CommentController extends Controller {
         return redirect()->back();
     }
 
+    public function update(Request $request, Comment $comment) {
+        $request->validate([
+            "comment" => "string|max:255"
+        ]);
+        if (Gate::allows("comment_owner", $comment)) {
+            $comment->update(["comment" => $request["comment"]]);
+        }
+    }
+
     public function destroy(Comment $comment) {
         if (Gate::allows("comment_owner", $comment)) {
             $comment->delete();
