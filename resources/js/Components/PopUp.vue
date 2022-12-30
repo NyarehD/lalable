@@ -5,6 +5,9 @@
             <h2 class="text-lg text-center font-semibold mb-5">
                 <slot name="title" />
             </h2>
+            <div class="mb-5">
+                <slot name="content" />
+            </div>
             <div class="flex justify-end">
                 <slot name="buttons" />
             </div>
