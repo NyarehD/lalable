@@ -3,9 +3,11 @@
         <img :src="comment.user.full_image_path" :alt="comment.user.name" class="w-11 h-11 rounded-full">
         <div class="ml-2 w-full">
             <div class="flex justify-between w-full items-center">
-                <p class="font-semibold"> {{ comment.user.name }}</p>
-                <div class="flex items-center">
+                <div class="">
+                    <p class="font-semibold"> {{ comment.user.name }}</p>
                     <p class="text-gray-900/70">{{ comment.for_humans }}</p>
+                </div>
+                <div class="flex items-center">
                     <DropAlt class="ml-2">
                         <button class="dropdownButton" v-if="comment.can.is_comment_owner">
                             Edit

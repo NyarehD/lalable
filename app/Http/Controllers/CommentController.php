@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Gate;
 class CommentController extends Controller {
     public function store(Request $request) {
         $request->validate([
-            "comment" => "string",
+            "comment" => "string|max:255",
             "post_id" => [new PostExistsRule()]
         ]);
         $comment = new Comment();
