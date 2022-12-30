@@ -3,7 +3,7 @@
             class="dropdownButton">
         Delete
     </button>
-    <PopUp :is-shown="doesPopUpShow">
+    <PopUp :is-shown="doesPopUpShow" @clicked-outside="doesPopUpShow=false">
         <template v-slot:title>
             Are you sure you want to delete?
         </template>

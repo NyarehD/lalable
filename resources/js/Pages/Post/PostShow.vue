@@ -39,7 +39,7 @@
     import XMark from "@/Components/Icons/XMark.vue";
     import { Inertia } from "@inertiajs/inertia";
     import PageLayout from "@/Layouts/PageLayout.vue";
-    import CommentSection from "@/Components/CommentSection.vue";
+    import CommentSection from "@/Components/Comment/CommentSection.vue";
 
     defineProps({
         post: Object,
