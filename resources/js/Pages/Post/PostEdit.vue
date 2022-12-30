@@ -12,7 +12,7 @@
             <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUpload"
                    @input="uploadAndPreviewPhoto" multiple>
             <label for="photoUpload">
-                <PrimaryBtn class="px-3" @click.prevent="fileUpload.click()">
+                <PrimaryBtn type="primary" class="px-3" @click.prevent="fileUpload.click()">
                     <Media />
                 </PrimaryBtn>
             </label>

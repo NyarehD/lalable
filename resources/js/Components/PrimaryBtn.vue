@@ -1,14 +1,11 @@
 <template>
-    <button :class="{'primaryBtn':type==='primary','primaryOutlineBtn':type==='outline','primaryTextBtn':type==='text'}">
+    <button
+        :class="{'primaryBtn':type==='primary','primaryOutlineBtn':type==='outline','primaryTextBtn':type==='text'}">
         <slot />
     </button>
 </template>
-<script setup>
-    defineProps({
-        type: {
-            default: "primary",
-            type: String,
-            required: false,
-        },
-    });
+<script setup lang="ts">
+    defineProps<{
+        type?: "primary" | "outline" | "text"
+    }>();
 </script>

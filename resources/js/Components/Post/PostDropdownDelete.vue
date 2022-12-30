@@ -12,7 +12,7 @@
                         @click.stop="deletePost">
                 Delete
             </PrimaryBtn>
-            <PrimaryBtn @click.stop="doesPopUpShow=false">Cancel</PrimaryBtn>
+            <PrimaryBtn type="primary" @click.stop="doesPopUpShow=false">Cancel</PrimaryBtn>
         </template>
     </PopUp>
 </template>
