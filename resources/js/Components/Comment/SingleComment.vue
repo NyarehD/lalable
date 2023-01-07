@@ -9,6 +9,7 @@
                 </div>
                 <div class="flex items-center">
                     <DropAlt class="ml-2">
+                        <!--                        Comment Edit-->
                         <button class="dropdownButton" v-if="comment.can.is_comment_owner"
                                 @click.stop="isCommentEditPopUpShown=true">
                             Edit
@@ -28,6 +29,28 @@
                                 </PrimaryBtn>
                             </template>
                         </PopUp>
+                        <!--End of Comment Edit-->
+                        <!--Comment Reply-->
+                        <button class="dropdownButton" @click="isCommentReplyPopUpShown=true">
+                            Reply
+                        </button>
+                        <PopUp :is-shown="isCommentReplyPopUpShown" @clicked-outside="isCommentReplyPopUpShown=false">
+                            <template v-slot:title>
+                                Reply to {{ comment.user.name }}
+                            </template>
+                            <template v-slot:content>
+                                <TextInput class="w-96" v-model="replyingComment" @keydown.enter="replyComment" />
+                            </template>
+                            <template v-slot:buttons>
+                                <PrimaryBtn type="primary" class="mr-3" @click.stop="replyComment">
+                                    Reply
+                                </PrimaryBtn>
+                                <PrimaryBtn type="outline" @click.stop="isCommentReplyPopUpShown=false">Cancel
+                                </PrimaryBtn>
+                            </template>
+                        </PopUp>
+                        <!--End of Comment Reply-->
+                        <!--Comment Delete-->
                         <button class="dropdownButton" v-if="comment.can.is_comment_owner"
                                 @click="isCommentDeletePopUpShown=true">
                             Delete
@@ -45,6 +68,7 @@
                                 </PrimaryBtn>
                             </template>
                         </PopUp>
+                        <!--                        End of Comment Delete-->
                     </DropAlt>
                 </div>
             </div>
@@ -63,7 +87,9 @@
 
     const isCommentDeletePopUpShown = ref(false);
     const isCommentEditPopUpShown = ref(false);
+    const isCommentReplyPopUpShown = ref(false);
     const editingComment = ref(comment.comment);
+    const replyingComment = ref("");
     const { comment } = defineProps({
         comment: Object,
     });
@@ -86,6 +112,17 @@
             },
             preserveState: false,
             preserveScroll: true,
+        });
+    }
+
+    function replyComment() {
+        Inertia.post(route("comment.store"), {
+            "comment": replyingComment.value,
+            "post_id": comment.post_id,
+            "parent_id": comment.id,
+        }, {
+            preserveScroll: true,
+            preserveState: false,
         });
     }
 
