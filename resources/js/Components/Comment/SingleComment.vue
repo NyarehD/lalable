@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-4 flex">
+    <div class="flex">
         <img :src="comment.user.full_image_path" :alt="comment.user.name" class="w-11 h-11 rounded-full">
         <div class="ml-2 w-full">
             <div class="flex justify-between w-full items-center">
@@ -11,10 +11,10 @@
                     <DropAlt class="ml-2">
                         <!--                        Comment Edit-->
                         <button class="dropdownButton" v-if="comment.can.is_comment_owner"
-                                @click.stop="isCommentEditPopUpShown=true">
+                            @click.stop="isCommentEditPopUpShown = true">
                             Edit
                         </button>
-                        <PopUp :is-shown="isCommentEditPopUpShown" @clicked-outside="isCommentEditPopUpShown=false">
+                        <PopUp :is-shown="isCommentEditPopUpShown" @clicked-outside="isCommentEditPopUpShown = false">
                             <template v-slot:title>
                                 Edit your comment
                             </template>
@@ -25,16 +25,16 @@
                                 <PrimaryBtn type="primary" class="mr-3" @click.stop="updateComment">
                                     Save
                                 </PrimaryBtn>
-                                <PrimaryBtn type="outline" @click.stop="isCommentEditPopUpShown=false">Cancel
+                                <PrimaryBtn type="outline" @click.stop="isCommentEditPopUpShown = false">Cancel
                                 </PrimaryBtn>
                             </template>
                         </PopUp>
                         <!--End of Comment Edit-->
                         <!--Comment Reply-->
-                        <button class="dropdownButton" @click="isCommentReplyPopUpShown=true">
+                        <button class="dropdownButton" @click="isCommentReplyPopUpShown = true">
                             Reply
                         </button>
-                        <PopUp :is-shown="isCommentReplyPopUpShown" @clicked-outside="isCommentReplyPopUpShown=false">
+                        <PopUp :is-shown="isCommentReplyPopUpShown" @clicked-outside="isCommentReplyPopUpShown = false">
                             <template v-slot:title>
                                 Reply to {{ comment.user.name }}
                             </template>
@@ -45,26 +45,27 @@
                                 <PrimaryBtn type="primary" class="mr-3" @click.stop="replyComment">
                                     Reply
                                 </PrimaryBtn>
-                                <PrimaryBtn type="outline" @click.stop="isCommentReplyPopUpShown=false">Cancel
+                                <PrimaryBtn type="outline" @click.stop="isCommentReplyPopUpShown = false">Cancel
                                 </PrimaryBtn>
                             </template>
                         </PopUp>
                         <!--End of Comment Reply-->
                         <!--Comment Delete-->
                         <button class="dropdownButton" v-if="comment.can.is_comment_owner"
-                                @click="isCommentDeletePopUpShown=true">
+                            @click="isCommentDeletePopUpShown = true">
                             Delete
                         </button>
-                        <PopUp :is-shown="isCommentDeletePopUpShown" @clicked-outside="isCommentDeletePopUpShown=false">
+                        <PopUp :is-shown="isCommentDeletePopUpShown"
+                            @clicked-outside="isCommentDeletePopUpShown = false">
                             <template v-slot:title>
                                 Are you sure you want to delete the comment?
                             </template>
                             <template v-slot:buttons>
                                 <PrimaryBtn type="outline" class="border-red-600 text-red-600 hover:bg-red-600 mr-3"
-                                            @click.stop="deleteComment">
+                                    @click.stop="deleteComment">
                                     Delete
                                 </PrimaryBtn>
-                                <PrimaryBtn type="primary" @click.stop="isCommentDeletePopUpShown=false">Cancel
+                                <PrimaryBtn type="primary" @click.stop="isCommentDeletePopUpShown = false">Cancel
                                 </PrimaryBtn>
                             </template>
                         </PopUp>
@@ -72,72 +73,75 @@
                     </DropAlt>
                 </div>
             </div>
-            <p>{{ comment.comment }}</p>
+            <p class="mb-4">{{ comment.comment }}</p>
+            <div>
+                <SingleComment v-for="reply in comment.replies" :key="`replies${comment.id}${reply.id}`"
+                    :comment="reply" />
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-    import DropAlt from "@/Components/DropAlt.vue";
-    import PopUp from "@/Components/PopUp.vue";
-    import { ref } from "vue";
-    import PrimaryBtn from "@/Components/PrimaryBtn.vue";
-    import { Inertia } from "@inertiajs/inertia";
-    import TextInput from "@/Components/TextInput.vue";
+import DropAlt from "@/Components/DropAlt.vue";
+import PopUp from "@/Components/PopUp.vue";
+import { ref } from "vue";
+import PrimaryBtn from "@/Components/PrimaryBtn.vue";
+import { Inertia } from "@inertiajs/inertia";
+import TextInput from "@/Components/TextInput.vue";
 
-    const isCommentDeletePopUpShown = ref(false);
-    const isCommentEditPopUpShown = ref(false);
-    const isCommentReplyPopUpShown = ref(false);
-    const editingComment = ref(comment.comment);
-    const replyingComment = ref("");
-    const { comment } = defineProps({
-        comment: Object,
+const isCommentDeletePopUpShown = ref(false);
+const isCommentEditPopUpShown = ref(false);
+const isCommentReplyPopUpShown = ref(false);
+const editingComment = ref(comment.comment);
+const replyingComment = ref("");
+const { comment } = defineProps({
+    comment: Object,
+});
+function onFinish(data) {
+    if (data.completed) {
+        Inertia.reload({ only: ["post"] });
+    }
+}
+
+function updateComment() {
+    Inertia.patch(route("comment.update", { id: comment.id }), {
+        method: "patch",
+        comment: editingComment.value,
+    }, {
+        onFinish: (data) => {
+            if (data.completed) {
+                Inertia.reload({ only: ["post"] });
+            }
+        },
+        preserveState: false,
+        preserveScroll: true,
     });
+}
 
-    function onFinish(data) {
-        if (data.completed) {
-            Inertia.reload({ only: ["post"] });
-        }
-    }
+function replyComment() {
+    Inertia.post(route("comment.store"), {
+        "comment": replyingComment.value,
+        "post_id": comment.post_id,
+        "parent_id": comment.id,
+    }, {
+        preserveScroll: true,
+        preserveState: false,
+    });
+}
 
-    function updateComment() {
-        Inertia.patch(route("comment.update", { id: comment.id }), {
-            method: "patch",
-            comment: editingComment.value,
-        }, {
-            onFinish: (data) => {
-                if (data.completed) {
-                    Inertia.reload({ only: ["post"] });
-                }
-            },
-            preserveState: false,
-            preserveScroll: true,
-        });
-    }
-
-    function replyComment() {
-        Inertia.post(route("comment.store"), {
-            "comment": replyingComment.value,
-            "post_id": comment.post_id,
-            "parent_id": comment.id,
-        }, {
-            preserveScroll: true,
-            preserveState: false,
-        });
-    }
-
-    function deleteComment() {
-        Inertia.post(route("comment.destroy", { id: comment.id }), {
-            _method: "delete",
-        }, {
-            onFinish: (data) => {
-                if (data.completed) {
-                    Inertia.reload({ only: ["post"] });
-                }
-            },
-            preserveScroll: true,
-        });
-    }
+function deleteComment() {
+    Inertia.post(route("comment.destroy", { id: comment.id }), {
+        _method: "delete",
+    }, {
+        onFinish: (data) => {
+            if (data.completed) {
+                Inertia.reload({ only: ["post"] });
+            }
+        },
+        preserveScroll: true,
+    });
+}
 </script>
 
 <style lang="scss" scoped>

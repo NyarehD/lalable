@@ -3,7 +3,7 @@
         <div class="flex px-4 py-3 justify-between gap-2 grow-0">
             <img :src="user.full_image_path" alt="" class="w-11 h-auto rounded-full ">
             <TextInput class="w-full " v-model="comment" @keydown.enter="commentPost" />
-            <PrimaryBtn @click.prevent="commentPost">Comment</PrimaryBtn>
+            <PrimaryBtn @click.prevent="commentPost" type="primary">Comment</PrimaryBtn>
         </div>
         <div class="px-4 py-3 overflow-auto" v-memo>
             <SingleComment v-for="comment in comments" :key="`comments${comment.id}`" :comment="comment" />

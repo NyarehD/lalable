@@ -12,7 +12,7 @@ class Comment extends Model {
     use HasFactory;
 
     protected $fillable = ["user_id", "post_id", "comment", "parent_id"];
-    protected $hidden = ["user_id", "post_id"];
+    protected $hidden = ["user_id"];
     protected $appends = ["for_humans", "can"];
 
     public function user() {

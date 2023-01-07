@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Rules\CommentExistsRule;
 use App\Rules\PostExistsRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,12 +13,16 @@ class CommentController extends Controller {
     public function store(Request $request) {
         $request->validate([
             "comment" => "string|max:255",
-            "post_id" => [new PostExistsRule()]
+            "post_id" => [new PostExistsRule()],
+            "parent_id" => [new CommentExistsRule()]
         ]);
         $comment = new Comment();
         $comment->post_id = $request['post_id'];
         $comment->user_id = Auth::id();
         $comment->comment = $request['comment'];
+        if (isset($request->parent_id)) {
+            $comment->parent_id = $request["parent_id"];
+        }
         $comment->save();
         return redirect()->back();
     }
