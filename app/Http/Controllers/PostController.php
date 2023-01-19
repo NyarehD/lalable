@@ -16,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Storage;
 
-class PostController extends Controller {
-    public function index() {
-        $posts = Post::latest()->with(["original_post"])->get();
+class PostController extends Controller
+{
+    public function index()
+    {
+        $posts = Post::latest()->with(["original_post", "total_likes"])->withCount("allComments")->get();
         return Inertia::render("NewsFeed", [
             'posts' => $posts,
             'canLogin' => Route::has('login'),
@@ -28,11 +30,13 @@ class PostController extends Controller {
         ]);
     }
 
-    public function create() {
+    public function create()
+    {
         return Inertia::render("Post/PostCreate");
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         // Validating the uploaded images
         if ($request->hasFile("photos.*")) {
             // For saving names of saved images
@@ -50,9 +54,9 @@ class PostController extends Controller {
             "photos" => "required_without:description",
             "photos.*" => "mimetypes:image/jpeg,image/png"
         ], [
-            "description.required_without" => "Please either provide description or upload photos",
-            "photos.required_without" => "Please either provide description or upload photos",
-        ]);
+                "description.required_without" => "Please either provide description or upload photos",
+                "photos.required_without" => "Please either provide description or upload photos",
+            ]);
 
         $post = new Post();
         $post->description = $request['description'];
@@ -70,19 +74,22 @@ class PostController extends Controller {
         return redirect()->route("newsfeed")->with("message", "Post Created");
     }
 
-    public function show(Post $post) {
+    public function show(Post $post)
+    {
         $post->load(["comments", "comments.replies", "comments.user:id,name,profile_picture"]);
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
-    public function edit(Post $post) {
+    public function edit(Post $post)
+    {
         if (Gate::allows("post_owner", $post)) {
             return Inertia::render("Post/PostEdit", ["post" => $post]);
         }
         return abort(403);
     }
 
-    public function update(Request $request, Post $post) {
+    public function update(Request $request, Post $post)
+    {
         if (Gate::allows("post_owner", $post)) {
             if ($request->hasFile("photos.*")) {
                 $fileNameArr = [];
@@ -114,7 +121,8 @@ class PostController extends Controller {
         return abort(403);
     }
 
-    public function destroy(Post $post) {
+    public function destroy(Post $post)
+    {
         if (Gate::allows('post_owner', $post)) {
             if (isset($post->post_photos)) {
                 foreach ($post->post_photos as $photo) {
@@ -130,7 +138,8 @@ class PostController extends Controller {
         }
     }
 
-    public function like(Request $request) {
+    public function like(Request $request)
+    {
         $request->validate([
             "post_id" => [new UserHasNotLikedRule(), new PostExistsRule()]
         ]);
@@ -141,7 +150,8 @@ class PostController extends Controller {
         return response('', 200);
     }
 
-    public function unlike(Request $request) {
+    public function unlike(Request $request)
+    {
         $request->validate([
             "post_id" => [new PostExistsRule(), new UserHasLikedRule()],
         ]);
@@ -149,7 +159,8 @@ class PostController extends Controller {
         return response('', 200);
     }
 
-    public function share(Request $request) {
+    public function share(Request $request)
+    {
         $request->validate([
             "post_id" => [new PostExistsRule()],
             'description' => "nullable|string"

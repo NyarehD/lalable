@@ -24,7 +24,7 @@
                 </div>
             </div>
         </template>
-        <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" />
+        <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" :total-comments="post.all_comments_count"/>
     </div>
 </template>
 <script setup>
