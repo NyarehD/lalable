@@ -1,8 +1,8 @@
 <template>
     <div class="flex">
-        <img :src="comment.user.full_image_path" :alt="comment.user.name" class="w-11 h-11 rounded-full">
-        <div class="ml-2 w-full">
-            <div class="flex justify-between w-full items-center">
+        <img :src="comment.user.full_image_path" :alt="comment.user.name" class="rounded-full w-11 h-11">
+        <div class="w-full ml-2">
+            <div class="flex items-center justify-between w-full">
                 <div class="">
                     <p class="font-semibold"> {{ comment.user.name }}</p>
                     <p class="text-gray-900/70">{{ comment.for_humans }}</p>
@@ -10,7 +10,7 @@
                 <div class="flex items-center">
                     <DropAlt class="ml-2">
                         <!--                        Comment Edit-->
-                        <button class="dropdownButton" v-if="comment.can.is_comment_owner"
+                        <button class="dropdownButton" v-if="$page.props.auth.user.id === comment.user.id"
                             @click.stop="isCommentEditPopUpShown = true">
                             Edit
                         </button>
@@ -51,7 +51,7 @@
                         </PopUp>
                         <!--End of Comment Reply-->
                         <!--Comment Delete-->
-                        <button class="dropdownButton" v-if="comment.can.is_comment_owner"
+                        <button class="dropdownButton" v-if="$page.props.auth.user.id === comment.user.id"
                             @click="isCommentDeletePopUpShown = true">
                             Delete
                         </button>
@@ -61,7 +61,7 @@
                                 Are you sure you want to delete the comment?
                             </template>
                             <template v-slot:buttons>
-                                <PrimaryBtn type="outline" class="border-red-600 text-red-600 hover:bg-red-600 mr-3"
+                                <PrimaryBtn type="outline" class="mr-3 text-red-600 border-red-600 hover:bg-red-600"
                                     @click.stop="deleteComment">
                                     Delete
                                 </PrimaryBtn>
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <p class="mb-4">{{ comment.comment }}</p>
-            <div>
+            <div v-if="comment.replies">
                 <SingleComment v-for="reply in comment.replies" :key="`replies${comment.id}${reply.id}`"
                     :comment="reply" />
             </div>

@@ -54,9 +54,9 @@ class PostController extends Controller
             "photos" => "required_without:description",
             "photos.*" => "mimetypes:image/jpeg,image/png"
         ], [
-                "description.required_without" => "Please either provide description or upload photos",
-                "photos.required_without" => "Please either provide description or upload photos",
-            ]);
+            "description.required_without" => "Please either provide description or upload photos",
+            "photos.required_without" => "Please either provide description or upload photos",
+        ]);
 
         $post = new Post();
         $post->description = $request['description'];
@@ -76,7 +76,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post->load(["comments", "comments.replies", "comments.user:id,name,profile_picture"]);
+        $post->load(["comments", "comments.replies", "comments.replies.user", "comments.user:id,name,profile_picture"]);
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
