@@ -31,13 +31,13 @@
     import PhotoCarousel from "@/Components/PhotoCarousel.vue";
     import PostProfile from "@/Components/Post/PostProfile.vue";
     import PostReaction from "@/Components/Post/PostReaction.vue";
-    import { Inertia } from "@inertiajs/inertia";
+    import { router } from "@inertiajs/vue3";
 
     const props = defineProps({
         post: Object,
     });
 
     function goToPost() {
-        Inertia.visit(route("post.show", { id: props.post.id }), { preserveScroll: true });
+        router.visit(route("post.show", { id: props.post.id }), { preserveScroll: true });
     }
 </script>

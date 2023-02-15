@@ -27,28 +27,28 @@
     </div>
 </template>
 <script setup>
-import LikeOutline from "@/Components/Icons/LikeOutline.vue";
-import LikeSolid from "@/Components/Icons/LikeSolid.vue";
-import ShareIcon from "@/Components/Icons/ShareIcon.vue";
-import { Inertia } from "@inertiajs/inertia";
-import CommentIcon from "@/Components/Icons/CommentIcon.vue";
+    import LikeOutline from "@/Components/Icons/LikeOutline.vue";
+    import LikeSolid from "@/Components/Icons/LikeSolid.vue";
+    import ShareIcon from "@/Components/Icons/ShareIcon.vue";
+    import { router } from "@inertiajs/vue3";
+    import CommentIcon from "@/Components/Icons/CommentIcon.vue";
 
-const props = defineProps({
-    postId: Number,
-    totalLikes: Number,
-    userLiked: Boolean,
-    totalComments: Number
-});
-
-function toggleLike() {
-    Inertia.post(route(props.userLiked ? "post.unlike" : "post.like"), { "post_id": props.postId }, {
-        preserveScroll: true,
+    const props = defineProps({
+        postId: Number,
+        totalLikes: Number,
+        userLiked: Boolean,
+        totalComments: Number
     });
-}
 
-function sharePost() {
-    Inertia.post(route("post.share"), { "description": "alskdfj", "post_id": props.postId }, {
-        preserveScroll: true,
-    });
-}
+    function toggleLike() {
+        router.post(route(props.userLiked ? "post.unlike" : "post.like"), { "post_id": props.postId }, {
+            preserveScroll: true,
+        });
+    }
+
+    function sharePost() {
+        router.post(route("post.share"), { "description": "alskdfj", "post_id": props.postId }, {
+            preserveScroll: true,
+        });
+    }
 </script>

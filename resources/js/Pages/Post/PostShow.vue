@@ -1,8 +1,8 @@
 <template>
     <!--    Do not search for solutions for overflowing in this page. That overflow is caused by laravel debug bar by adding margin-bottom: 3px to body-->
-    <template v-if="post.post_photos.length>0">
+    <template v-if="post.post_photos.length > 0">
         <div class="flex flex-col md:flex-row overflow-hidden max-h-screen rounded-3xl relative">
-            <div class="md:w-7/12 lg:w-2/3" v-if="post.post_photos.length>1">
+            <div class="md:w-7/12 lg:w-2/3" v-if="post.post_photos.length > 1">
                 <PhotoCarousel :photos="post.post_photos" :is-full-height="true" v-show="true" />
             </div>
             <div class="md:w-7/12 lg:w-2/3" v-else>
@@ -37,7 +37,7 @@
     import PostReaction from "@/Components/Post/PostReaction.vue";
     import Post from "@/Components/Post/Post.vue";
     import XMark from "@/Components/Icons/XMark.vue";
-    import { Inertia } from "@inertiajs/inertia";
+    import { router } from "@inertiajs/vue3";
     import PageLayout from "@/Layouts/PageLayout.vue";
     import CommentSection from "@/Components/Comment/CommentSection.vue";
 
@@ -46,9 +46,7 @@
     });
 
     function goToNewsFeed() {
-        Inertia.visit("/", { preserveScroll: true, replace: true });
+        router.visit("/", { preserveScroll: true, replace: true });
     }
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

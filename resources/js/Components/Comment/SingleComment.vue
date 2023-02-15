@@ -87,7 +87,7 @@
     import PopUp from "@/Components/PopUp.vue";
     import { ref } from "vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
-    import { Inertia } from "@inertiajs/inertia";
+    import { router } from "@inertiajs/vue3";
     import TextInput from "@/Components/TextInput.vue";
 
     const { comment } = defineProps({
@@ -102,18 +102,18 @@
 
     function onFinish(data) {
         if (data.completed) {
-            Inertia.reload({ only: ["post"] });
+            router.reload({ only: ["post"] });
         }
     }
 
     function updateComment() {
-        Inertia.patch(route("comment.update", { id: comment.id }), {
+        router.patch(route("comment.update", { id: comment.id }), {
             method: "patch",
             comment: editingComment.value,
         }, {
             onFinish: (data) => {
                 if (data.completed) {
-                    Inertia.reload({ only: ["post"] });
+                    router.reload({ only: ["post"] });
                 }
             },
             preserveState: false,
@@ -122,7 +122,7 @@
     }
 
     function replyComment() {
-        Inertia.post(route("comment.store"), {
+        router.post(route("comment.store"), {
             "comment": replyingComment.value,
             "post_id": comment.post_id,
             "parent_id": comment.id,
@@ -133,12 +133,12 @@
     }
 
     function deleteComment() {
-        Inertia.post(route("comment.destroy", { id: comment.id }), {
+        router.post(route("comment.destroy", { id: comment.id }), {
             _method: "delete",
         }, {
             onFinish: (data) => {
                 if (data.completed) {
-                    Inertia.reload({ only: ["post"] });
+                    router.reload({ only: ["post"] });
                 }
             },
             preserveScroll: true,
