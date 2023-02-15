@@ -83,67 +83,67 @@
 </template>
 
 <script setup>
-import DropAlt from "@/Components/DropAlt.vue";
-import PopUp from "@/Components/PopUp.vue";
-import { ref } from "vue";
-import PrimaryBtn from "@/Components/PrimaryBtn.vue";
-import { Inertia } from "@inertiajs/inertia";
-import TextInput from "@/Components/TextInput.vue";
+    import DropAlt from "@/Components/DropAlt.vue";
+    import PopUp from "@/Components/PopUp.vue";
+    import { ref } from "vue";
+    import PrimaryBtn from "@/Components/PrimaryBtn.vue";
+    import { Inertia } from "@inertiajs/inertia";
+    import TextInput from "@/Components/TextInput.vue";
 
-const isCommentDeletePopUpShown = ref(false);
-const isCommentEditPopUpShown = ref(false);
-const isCommentReplyPopUpShown = ref(false);
-const editingComment = ref(comment.comment);
-const replyingComment = ref("");
-const { comment } = defineProps({
-    comment: Object,
-});
-function onFinish(data) {
-    if (data.completed) {
-        Inertia.reload({ only: ["post"] });
+    const { comment } = defineProps({
+        comment: Object,
+    });
+
+    const isCommentDeletePopUpShown = ref(false);
+    const isCommentEditPopUpShown = ref(false);
+    const isCommentReplyPopUpShown = ref(false);
+    const editingComment = ref(comment.comment);
+    const replyingComment = ref("");
+
+    function onFinish(data) {
+        if (data.completed) {
+            Inertia.reload({ only: ["post"] });
+        }
     }
-}
 
-function updateComment() {
-    Inertia.patch(route("comment.update", { id: comment.id }), {
-        method: "patch",
-        comment: editingComment.value,
-    }, {
-        onFinish: (data) => {
-            if (data.completed) {
-                Inertia.reload({ only: ["post"] });
-            }
-        },
-        preserveState: false,
-        preserveScroll: true,
-    });
-}
+    function updateComment() {
+        Inertia.patch(route("comment.update", { id: comment.id }), {
+            method: "patch",
+            comment: editingComment.value,
+        }, {
+            onFinish: (data) => {
+                if (data.completed) {
+                    Inertia.reload({ only: ["post"] });
+                }
+            },
+            preserveState: false,
+            preserveScroll: true,
+        });
+    }
 
-function replyComment() {
-    Inertia.post(route("comment.store"), {
-        "comment": replyingComment.value,
-        "post_id": comment.post_id,
-        "parent_id": comment.id,
-    }, {
-        preserveScroll: true,
-        preserveState: false,
-    });
-}
+    function replyComment() {
+        Inertia.post(route("comment.store"), {
+            "comment": replyingComment.value,
+            "post_id": comment.post_id,
+            "parent_id": comment.id,
+        }, {
+            preserveScroll: true,
+            preserveState: false,
+        });
+    }
 
-function deleteComment() {
-    Inertia.post(route("comment.destroy", { id: comment.id }), {
-        _method: "delete",
-    }, {
-        onFinish: (data) => {
-            if (data.completed) {
-                Inertia.reload({ only: ["post"] });
-            }
-        },
-        preserveScroll: true,
-    });
-}
+    function deleteComment() {
+        Inertia.post(route("comment.destroy", { id: comment.id }), {
+            _method: "delete",
+        }, {
+            onFinish: (data) => {
+                if (data.completed) {
+                    Inertia.reload({ only: ["post"] });
+                }
+            },
+            preserveScroll: true,
+        });
+    }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
