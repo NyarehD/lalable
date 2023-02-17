@@ -1,18 +1,20 @@
 <template>
-    <div class="max-w-2xl mx-auto px-2">
+    <div class="max-w-2xl px-2 mx-auto">
         <Post v-for="(post) in posts" :post="post" :key="post.id" />
     </div>
+    <TextToast :text="$page.props.message" v-if="$page.props.message" />
 </template>
 <script setup>
     import Post from "@/Components/Post/Post.vue";
-
+    import TextToast from "@/Components/TextToast.vue";
+    
     defineProps({
         posts: Object,
     });
 </script>
 <script>
     import PageLayout from "../Layouts/PageLayout.vue";
-
+    
     export default {
         layout: PageLayout,
     };
