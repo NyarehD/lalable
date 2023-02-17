@@ -67,7 +67,7 @@ class PostController extends Controller {
                 $postPhoto->save();
             }
         }
-        return redirect()->route("newsfeed")->with("message", "Post Created");
+        return redirect()->route("newsfeed")->with(["message" => "Post Created Successfully"]);
     }
 
     public function show(Post $post) {
