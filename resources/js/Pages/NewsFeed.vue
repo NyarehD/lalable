@@ -1,8 +1,8 @@
 <template>
-    <div class="max-w-2xl px-2 mx-auto">
+    <div class="max-w-2xl px-2 mx-auto" v-memo>
         <Post v-for="(post) in posts" :post="post" :key="post.id" />
     </div>
-    <TextToast :text="$page.props.message" v-if="$page.props.message" />
+    <TextToast :text="$page.props.message" />
 </template>
 <script setup>
     import Post from "@/Components/Post/Post.vue";
