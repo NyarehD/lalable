@@ -9,15 +9,19 @@
     </Transition>
   </Teleport>
 </template>
-<script setup>
+<script setup lang="ts">
   import { ref } from 'vue';
   import XIcon from './Icons/XIcon.vue';
-  
+  import { onMounted } from 'vue';
+
   const isShown = ref(true);
-  defineProps({
-    text: {
-      required: true,
-      type: String
-    }
+  const props = defineProps<{
+    text: string | null | unknown,
+    duration?: number
+  }>()
+  onMounted(() => {
+    setTimeout(() => {
+      isShown.value = false
+    }, typeof props.duration === "number" ? props.duration : 500);
   })
 </script>
