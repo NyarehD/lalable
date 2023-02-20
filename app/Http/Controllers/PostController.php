@@ -18,9 +18,9 @@ use Storage;
 
 class PostController extends Controller {
     public function index() {
-        $posts = Post::latest()->with(["original_post"])->withCount("allComments", "total_likes", "user_liked")->get();
+        $posts = Post::latest()->with(["original_post"])->withCount("allComments", "total_likes", "user_liked")->simplePaginate(12)->withPath(url("/api/post"));
         return Inertia::render("NewsFeed", [
-            'posts' => $posts,
+            'data' => $posts,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,

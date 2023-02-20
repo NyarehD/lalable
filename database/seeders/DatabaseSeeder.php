@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder {
             "name" => "asdf",
             "email" => "asdf@gmail.com"
         ]);
-        Post::factory(10)->create();
-        Comment::factory(10)->create();
+        Post::factory(50)->create();
+        Comment::factory(50)->create();
     }
 }

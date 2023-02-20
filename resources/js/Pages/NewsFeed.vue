@@ -2,19 +2,42 @@
     <div class="max-w-2xl px-2 mx-auto" v-memo>
         <Post v-for="(post) in posts" :post="post" :key="post.id" />
     </div>
-    <TextToast :text="$page.props.message" />
+    <div v-if="!data.next_page_url">
+        No more posts
+    </div>
+    <TextToast :text="$page.props.message" :duration="1000" />
 </template>
-<script setup>
+<script setup lang="ts">
     import Post from "@/Components/Post/Post.vue";
     import TextToast from "@/Components/TextToast.vue";
-    
-    defineProps({
-        posts: Object,
-    });
+    import { useInfiniteScroll } from "@vueuse/core";
+    import { onMounted } from "vue";
+    import { ref } from "vue";
+
+
+    const props = defineProps<{
+        data: {
+            data: any[],
+            next_page_url?: string,
+        }
+    }>();
+
+    const posts = ref(props.data.data);
+
+    onMounted(() => {
+        useInfiniteScroll(window, () => {
+            if (props.data.next_page_url) {
+                fetch(props.data.next_page_url).then(response => response.json()).then(data => {
+                    posts.value = [...posts.value, ...data.data];
+                    props.data.next_page_url = data.next_page_url;
+                })
+            }
+        })
+    })
 </script>
-<script>
+<script lang="ts">
     import PageLayout from "../Layouts/PageLayout.vue";
-    
+
     export default {
         layout: PageLayout,
     };
