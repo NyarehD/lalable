@@ -44,6 +44,9 @@ class User extends Authenticatable {
     ];
 
     protected $appends = ["full_image_path"];
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
 
     protected function fullImagePath(): Attribute {
         return new Attribute(get: fn() => asset("/storage/profile-picture/$this->profile_picture"));
