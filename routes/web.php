@@ -19,23 +19,23 @@ use Inertia\Inertia;
 
 Route::get('/', [PostController::class, "index"])->name("newsfeed");
 Route::middleware("auth")->group(function () {
-    Route::get("/profile/{user}", [UserController::class, "profile"]);
+    Route::get("/profile/{user}", [UserController::class, "profile"])->name("user.profile");
     Route::resource("/post", PostController::class)->except("index");
     Route::prefix("/post")->group(
         function () {
             Route::controller(PostController::class)->group(
                 function () {
-                    Route::post("/like", "like")->name("post.like");
-                    Route::post("/unlike", "unlike")->name("post.unlike");
-                    Route::post("/share", "share")->name("post.share");
-                    Route::controller(CommentController::class)->prefix("comment")->group(
-                        function () {
-                            Route::post("/store", "store")->name("comment.store");
-                            Route::delete("/delete/{comment}", "destroy")->name("comment.destroy");
-                            Route::patch("/update/{comment}", "update")->name("comment.update");
-                        }
-                    );
-                }
+                        Route::post("/like", "like")->name("post.like");
+                        Route::post("/unlike", "unlike")->name("post.unlike");
+                        Route::post("/share", "share")->name("post.share");
+                        Route::controller(CommentController::class)->prefix("comment")->group(
+                            function () {
+                                            Route::post("/store", "store")->name("comment.store");
+                                            Route::delete("/delete/{comment}", "destroy")->name("comment.destroy");
+                                            Route::patch("/update/{comment}", "update")->name("comment.update");
+                                        }
+                        );
+                    }
             );
         }
     );
