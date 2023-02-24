@@ -1,7 +1,6 @@
 <template>
     <header class="sticky inset-0 z-10 bg-white drop-shadow-xl dark:bg-neutral-800">
-        <div
-            class="flex max-w-2xl md:max-w-[75rem] items-center justify-between px-3 dark:bg-neutral-800 h-16 mx-auto ">
+        <div class="flex max-w-2xl md:max-w-[75rem] items-center justify-between px-3 dark:bg-neutral-800 h-16 mx-auto ">
             <Link href="/" class="block">
             <img alt="Pokemon Logo" src="/Pokemon_International.svg" class="w-full h-10" />
             </Link>
@@ -28,7 +27,9 @@
                 </div>
                 <DarkModeButton class="mr-3" />
                 <div class="mr-3" v-if="user">
+                    <Link :href="route('user.profile', { user: user.id })">
                     <img :src="user.full_image_path" :alt="user.name" class="h-auto rounded-full w-11">
+                    </Link>
                 </div>
                 <div class="mx-3" v-else>
                     <PrimaryBtn type="outline">
@@ -60,7 +61,7 @@
     </header>
 </template>
 
-<script setup lang="ts">
+<script setup>
     import { computed, ref } from "vue";
     import NavBarLink from "./NavBarLink.vue";
     import NavBarToggleBtn from "./NavBarToggleBtn.vue";
