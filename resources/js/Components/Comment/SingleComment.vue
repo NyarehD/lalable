@@ -55,8 +55,7 @@
                             @click="isCommentDeletePopUpShown = true">
                             Delete
                         </button>
-                        <PopUp :is-shown="isCommentDeletePopUpShown"
-                            @clicked-outside="isCommentDeletePopUpShown = false">
+                        <PopUp :is-shown="isCommentDeletePopUpShown" @clicked-outside="isCommentDeletePopUpShown = false">
                             <template v-slot:title>
                                 Are you sure you want to delete the comment?
                             </template>
@@ -75,8 +74,7 @@
             </div>
             <p class="mb-4">{{ comment.comment }}</p>
             <div v-if="comment.replies">
-                <SingleComment v-for="reply in comment.replies" :key="`replies${comment.id}${reply.id}`"
-                    :comment="reply" />
+                <SingleComment v-for="reply in comment.replies" :key="`replies${comment.id}${reply.id}`" :comment="reply" />
             </div>
         </div>
     </div>
@@ -85,14 +83,15 @@
 <script setup>
     import DropAlt from "@/Components/DropAlt.vue";
     import PopUp from "@/Components/PopUp.vue";
-    import { ref } from "vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
-    import { router } from "@inertiajs/vue3";
     import TextInput from "@/Components/TextInput.vue";
+    import { router } from "@inertiajs/vue3";
+    import { ref, watchEffect } from "vue";
 
     const { comment } = defineProps({
         comment: Object,
     });
+    watchEffect(() => console.log(comment.id));
 
     const isCommentDeletePopUpShown = ref(false);
     const isCommentEditPopUpShown = ref(false);
