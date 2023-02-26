@@ -27,7 +27,7 @@
                 </div>
                 <DarkModeButton class="mr-3" />
                 <div class="mr-3" v-if="user">
-                    <Link :href="route('user.profile', { user: user.id })">
+                    <Link :href="route('user.show', { user: user.id })">
                     <img :src="user.full_image_path" :alt="user.name" class="h-auto rounded-full w-11">
                     </Link>
                 </div>
@@ -62,12 +62,12 @@
 </template>
 
 <script setup>
+    import { Link, usePage } from "@inertiajs/vue3";
     import { computed, ref } from "vue";
+    import PrimaryBtn from "../PrimaryBtn.vue";
+    import DarkModeButton from "./DarkModeButton.vue";
     import NavBarLink from "./NavBarLink.vue";
     import NavBarToggleBtn from "./NavBarToggleBtn.vue";
-    import DarkModeButton from "./DarkModeButton.vue";
-    import { Link, usePage } from "@inertiajs/vue3";
-    import PrimaryBtn from "../PrimaryBtn.vue";
 
     const navBarToggle = ref(false);
 
