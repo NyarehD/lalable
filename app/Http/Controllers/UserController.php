@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\UserSameAsAuth;
 use App\Models\User;
 use Inertia\Inertia;
 
 class UserController extends Controller {
+    public function __construct() {
+        $this->middleware(UserSameAsAuth::class)->only("edit");
+    }
     public function show(User $user) {
         return Inertia::render("User/UserView", [
             "user" => $user,
@@ -13,10 +17,8 @@ class UserController extends Controller {
         ]);
     }
     public function edit(User $user) {
-        if ($user->id === auth()->id()) {
-            return Inertia::render("User/UserEdit", [
-                "user" => $user
-            ]);
-        }
+        return Inertia::render("User/UserEdit", [
+            "user" => $user
+        ]);
     }
 }
