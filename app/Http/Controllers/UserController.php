@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\UserSameAsAuth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class UserController extends Controller {
@@ -38,5 +39,23 @@ class UserController extends Controller {
             return redirect()->back();
         }
         return abort(403);
+    }
+    public function updateProfilePicture(Request $request, User $user) {
+        $request->validate([
+            "profile_picture" => "mimetypes:image/jpeg,image/png|file|max:2500"
+        ]);
+        if ($user->profile_picture != "default.png") {
+            Storage::delete("/public/profile-picture/" . $user->profile_picture);
+        }
+
+        // Generate a unique new name for the profile_picture
+        $newName = uniqid() . "_profile_picture." . $request->file("profile_picture")->getClientOriginalExtension();
+        // Save that profile_picture
+        Storage::putFileAs($request->file("profile_picture"), "/public/profile-picture/" . $newName);
+        // Update the file name in user
+        $user->profile_picture = $newName;
+        $user->update();
+
+        return redirect()->back();
     }
 }

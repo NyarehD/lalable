@@ -4,10 +4,18 @@
     <div class="static flex md:sticky top-20 md:flex-col md:h-full md:w-1/3">
       <div class="flex md:flex-col rounded-3xl border-gray-500/20 border-[1px] md:mb-3">
         <div class="relative w-1/3 md:w-full">
-          <img :src="user.full_image_path" class="w-full rounded-3xl" :alt="`profile picture of ${user.name}`" />
-          <button class="absolute bottom-0 right-0 primaryBtn">
+          <img :src="previewProfilePhoto || user.full_image_path"
+            class="object-cover w-full h-full aspect-square rounded-3xl" :alt="`profile picture of ${user.name}`" />
+          <button class="absolute bottom-0 left-0 primaryBtn" @click="profilePictureInput.click">
             <PencilSquareIcon />
           </button>
+          <input type="file" accept="image/jpeg,image/png" class="hidden" id="profilePicture" ref="profilePictureInput"
+            @input="handleProfileInput">
+          <div class="absolute bottom-0 right-0">
+            <button class=" primaryBtn" v-show="showSaveProfilePhoto" @click="submitProfilePicture">Save</button>
+            <button class="bg-red-600 primaryBtn hover:bg-red-700" v-show="showSaveProfilePhoto"
+              @click="removePreviewPhoto">Cancel</button>
+          </div>
         </div>
         <div class="flex flex-col w-2/3 p-3 md:h-full">
           <div>
@@ -65,25 +73,55 @@
   import PencilSquareIcon from "@/Components/Icons/PencilSquareIcon.vue";
   import TextInput from "@/Components/TextInput.vue";
   import { Link, useForm, router } from "@inertiajs/vue3";
+
+  const profilePictureInput = ref<HTMLInputElement>();
+  const previewProfilePhoto = ref(null);
+  const showSaveProfilePhoto = ref(false);
   const props = defineProps<{
     user: object
   }>();
+
   const form = useForm({
     name: props.user.name,
     email: props.user.email,
     bio: props.user.bio
   })
+  const profilePictureForm = useForm({
+    profile_picture: null
+  })
+
   function handleForm() {
-    form.put(route('user.update', { user: props.user.id }), {
+    form.patch(route('user.update', { user: props.user.id }), {
       preserveState: true,
-      // onSuccess: function () {
-      // router.reload();
-      // },
     })
+  }
+
+  function handleProfileInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files as FileList;
+
+    showSaveProfilePhoto.value = true;
+    previewProfilePhoto.value = URL.createObjectURL(file[0]);
+    profilePictureForm.profile_picture = file[0];
+  }
+  function submitProfilePicture() {
+    if (profilePictureForm.profile_picture !== null) {
+      profilePictureForm.post(route('user.updateProfilePicture', { user: props.user.id }), {
+        onFinish: () => {
+          console.log(profilePictureForm.errors.profile_picture);
+        }
+      })
+    }
+  }
+  function removePreviewPhoto() {
+    previewProfilePhoto.value = null;
+    showSaveProfilePhoto.value = false;
   }
 </script>
 <script lang="ts">
   import PageLayout from '@/Layouts/PageLayout.vue';
+  import { ref } from "vue";
+  import { ToDataURLOptions } from "@vueuse/core";
   export default {
     layout: PageLayout,
     components: { TextInput }

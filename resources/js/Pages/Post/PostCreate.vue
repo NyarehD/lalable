@@ -26,34 +26,34 @@
     import InputError from "@/Components/InputError.vue";
     import { useForm } from "@inertiajs/vue3";
     import { ref } from "vue";
-    
+
     const imgList = ref([]);
     const fileUpload = ref(null);
-    
-    
+
+
     defineProps({
         errors: Object,
     });
-    
+
     const form = useForm({
         description: "",
         photos: [],
     });
-    
+
     function uploadAndPreviewPhoto(event) {
         for (let i = 0; i < event.target.files.length; i++) {
             imgList.value.push(URL.createObjectURL(event.target.files[i]));
             form.photos.push(event.target.files[i]);
         }
     }
-    
+
     const submit = () => {
         form.post(route("post.store"));
     };
 </script>
 <script>
     import PageLayout from "@/Layouts/PageLayout.vue";
-    
+
     export default {
         layout: PageLayout,
     };

@@ -20,6 +20,7 @@ use Inertia\Inertia;
 Route::get('/', [PostController::class, "index"])->name("newsfeed");
 Route::middleware("auth")->group(function () {
     Route::resource("/user", UserController::class);
+    Route::post("/user/{user}/updateProfilePicture", [UserController::class, "updateProfilePicture"])->name("user.updateProfilePicture");
     Route::resource("/post", PostController::class)->except("index");
     Route::prefix("/post")->group(
         function () {
