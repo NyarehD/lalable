@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col max-w-4xl gap-4 mx-auto md:flex-row">
     <!-- Container for Profile -->
-    <div class="static flex md:sticky top-20 md:flex-col md:h-full ">
+    <div class="static flex md:w-1/3 md:sticky top-20 md:flex-col md:h-full">
       <div class="flex md:flex-col rounded-3xl border-gray-500/20 border-[1px] md:mb-3">
         <div class="w-1/3 md:w-full">
           <img :src="user.full_image_path" class="w-full rounded-3xl" :alt="`profile picture of ${user.name}`" />
@@ -23,8 +23,14 @@
       </div>
     </div>
     <!-- Section for Profile's posts -->
-    <div class="flex flex-col rounded-3xl">
-      <Post v-for="(post) in posts" :post="post" :key="`posts${post.id}`" v-memo="[post.user_liked_count]" />
+    <div class="flex flex-col md:w-2/3 rounded-3xl">
+      <Post v-for="(post) in posts" :post="post" :key="`posts${post.id}`" v-memo="[post.user_liked_count]"
+        v-if="posts.length" />
+      <div
+        class="bg-white border-[1px] rounded-3xl h-20 items-center flex w-full border-gray-500/20 hover:bg-gray-200/50 py-3 px-6"
+        v-if="!posts.length">
+        There nothing posted by you at the moment.
+      </div>
     </div>
   </div>
 </template >
