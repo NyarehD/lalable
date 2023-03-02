@@ -28,7 +28,7 @@
                 <DarkModeButton class="mr-3" />
                 <div class="mr-3" v-if="user">
                     <Link :href="route('user.show', { user: user.id })">
-                    <img :src="user.full_image_path" :alt="user.name" class="h-auto rounded-full w-11">
+                    <img :src="user.full_image_path" :alt="user.name" class="rounded-full h-11 w-11">
                     </Link>
                 </div>
                 <div class="mx-3" v-else>
