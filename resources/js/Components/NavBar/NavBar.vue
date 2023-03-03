@@ -4,15 +4,19 @@
             <Link href="/" class="block">
             <img alt="Pokemon Logo" src="/Pokemon_International.svg" class="w-full h-10" />
             </Link>
-            <div class="relative hidden px-3 pl-5 bg-indigo-300 rounded-full h-9 md:block">
-                <span class="absolute inset-y-0 left-0 grid ml-3 place-content-center">
+            <div class="relative hidden px-3 pl-5 md:block">
+                <span
+                    class="absolute inset-y-0 grid ml-3 transition-colors duration-300 hover:cursor-pointer hover:text-blue-600 left-4 place-content-center"
+                    @click.once="submitSearch">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <input class="w-full pr-10 mt-1 bg-transparent focus:outline-none ml-7">
+                <input
+                    class="px-4 py-3 pl-10 bg-gray-200 border-none rounded-3xl h-11 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    ref="input" @keypress.enter="submitSearch" v-model="searchForm.keyword">
             </div>
             <div class="flex items-center justify-end w-auto">
                 <div class="mr-3">
@@ -61,8 +65,8 @@
     </header>
 </template>
 
-<script setup>
-    import { Link, usePage } from "@inertiajs/vue3";
+<script setup lang="ts">
+    import { Link, useForm, usePage } from "@inertiajs/vue3";
     import { computed, ref } from "vue";
     import PrimaryBtn from "../PrimaryBtn.vue";
     import DarkModeButton from "./DarkModeButton.vue";
@@ -71,10 +75,17 @@
 
     const navBarToggle = ref(false);
 
+    const searchForm = useForm({
+        keyword: ""
+    })
+
     function toggleNavBar() {
         navBarToggle.value = !navBarToggle.value;
     }
 
+    function submitSearch() {
+        searchForm.get(route("post.search"));
+    }
     const user = computed(() => usePage().props.auth.user);
 </script>
 

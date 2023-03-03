@@ -166,4 +166,15 @@ class PostController extends Controller {
         }
         return response("You cannot share a shared post", 403);
     }
+
+    public function search(Request $request) {
+        $posts = Post::latest()->where("description", "like", "%" . $request->keyword . "%")->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        return Inertia::render("NewsFeed", [
+            'posts' => $posts,
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    }
 }
