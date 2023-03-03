@@ -9,7 +9,7 @@
     import TextToast from "@/Components/TextToast.vue";
 
     const props = defineProps<{
-        posts: any[]
+        posts: any[],
     }>();
 </script>
 <script lang="ts">

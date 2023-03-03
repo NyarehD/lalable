@@ -84,7 +84,9 @@
     }
 
     function submitSearch() {
-        searchForm.get(route("post.search"));
+        searchForm.get(route("post.search"), {
+            onSuccess: () => searchForm.reset("keyword")
+        });
     }
     const user = computed(() => usePage().props.auth.user);
 </script>
