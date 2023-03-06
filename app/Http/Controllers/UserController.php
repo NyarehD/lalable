@@ -20,7 +20,7 @@ class UserController extends Controller {
     }
     public function edit(User $user) {
         return Inertia::render("User/UserEdit", [
-            "user" => $user
+            "user" => $user->makeVisible("email")
         ]);
     }
     public function update(Request $request, User $user) {
