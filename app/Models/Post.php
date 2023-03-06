@@ -14,6 +14,7 @@ class Post extends Model {
     protected $with = ["post_photos", "owner"];
 
     protected $appends = ["for_humans", "can"];
+    protected $hidden = ["created_at", "updated_at"];
 
     public function post_photos() {
         return $this->hasMany(PostPhoto::class);
