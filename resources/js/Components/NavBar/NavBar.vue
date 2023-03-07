@@ -66,6 +66,7 @@
 </template>
 
 <script setup lang="ts">
+    import User from "@/Types/user.type";
     import { Link, useForm, usePage } from "@inertiajs/vue3";
     import { computed, ref } from "vue";
     import PrimaryBtn from "../PrimaryBtn.vue";
@@ -88,7 +89,7 @@
             onSuccess: () => searchForm.reset("keyword")
         });
     }
-    const user = computed(() => usePage().props.auth.user);
+    const user = computed<User>(() => usePage().props.auth.user);
 </script>
 
 <style scoped lang="scss">

@@ -36,23 +36,13 @@
 </template >
 
 <script setup lang ="ts">
-  import Post from "@/Components/Post/Post.vue"
   import PencilSquareIcon from "@/Components/Icons/PencilSquareIcon.vue"
+  import Post from "@/Components/Post/Post.vue"
+  import { default as PostType } from "@/Types/post.type"
+  import User from "@/Types/user.type"
   import { Link } from "@inertiajs/vue3"
 
-  export interface Post {
-    id: number,
-    user_liked_count: number
-  }
-  export interface User {
-    id: number
-    name: string
-    bio: string
-    full_image_path: string
-  }
-
-  defineProps<{ user: User, posts: Post[] }>()
-
+  defineProps<{ user: User, posts: PostType[] }>()
 </script>
 
 <script lang="ts">

@@ -80,17 +80,18 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
     import DropAlt from "@/Components/DropAlt.vue";
     import PopUp from "@/Components/PopUp.vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
     import TextInput from "@/Components/TextInput.vue";
+    import Comment from "@/Types/comment.type";
     import { router } from "@inertiajs/vue3";
     import { ref, watchEffect } from "vue";
 
-    const { comment } = defineProps({
-        comment: Object,
-    });
+    const { comment } = defineProps<{
+        comment: Comment
+    }>();
     watchEffect(() => console.log(comment.id));
 
     const isCommentDeletePopUpShown = ref(false);

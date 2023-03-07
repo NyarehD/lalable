@@ -1,5 +1,5 @@
 <template>
-    <div class="flex py-3 px-4 justify-between">
+    <div class="flex justify-between px-4 py-3">
         <div class="flex">
             <img :src="post.owner.full_image_path" :alt="post.owner.name" class="w-12 h-12 rounded-full">
             <div class="ml-3">
@@ -20,14 +20,14 @@
         </DropAlt>
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
     import DropAlt from "@/Components/DropAlt.vue";
     import PostDropdownDelete from "@/Components/Post/PostDropdownDelete.vue";
+    import Post from "@/Types/post.type";
     import { Link } from "@inertiajs/vue3";
 
-    defineProps({
-        post: Object,
-    });
-
+    defineProps<{
+        post: Post
+    }>()
 </script>
 <style></style>

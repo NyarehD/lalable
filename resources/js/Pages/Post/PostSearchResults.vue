@@ -11,14 +11,15 @@
 <script setup lang="ts">
   import Post from "@/Components/Post/Post.vue";
   import TextToast from "@/Components/TextToast.vue";
+  import { default as PostType } from "@/Types/post.type"
 
   const props = defineProps<{
-    posts: any[],
+    posts: PostType[],
     keyword: String
   }>();
 </script>
 <script lang="ts">
-  import PageLayout from "../../Layouts/PageLayout.vue";
+  import PageLayout from "@/Layouts/PageLayout.vue";
 
   export default {
     layout: PageLayout,

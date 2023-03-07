@@ -12,20 +12,22 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
     import SingleComment from "@/Components/Comment/SingleComment.vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
     import TextInput from "@/Components/TextInput.vue";
+    import Comment from "@/Types/comment.type";
+    import User from "@/Types/user.type";
     import { router, usePage } from "@inertiajs/vue3";
     import { computed, ref } from "vue";
 
     const comment = ref("");
 
-    const { comments, postId } = defineProps({
-        comments: Object,
-        postId: Number,
-    });
-    const user = computed(() => usePage().props.auth.user);
+    const { comments, postId } = defineProps<{
+        comments: Comment[],
+        postId: number
+    }>();
+    const user = computed<User>(() => usePage().props.auth.user);
     function commentPost() {
         router.post(route("comment.store"), {
             "comment": comment.value,

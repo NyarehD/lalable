@@ -63,19 +63,21 @@
 <script setup lang="ts">
   import PencilSquareIcon from "@/Components/Icons/PencilSquareIcon.vue";
   import TextInput from "@/Components/TextInput.vue";
-  import { Link, useForm, router } from "@inertiajs/vue3";
+  import User from "@/Types/user.type";
+  import { useForm } from "@inertiajs/vue3";
+
 
   const profilePictureInput = ref<HTMLInputElement>();
-  const previewProfilePhoto = ref(null);
+  const previewProfilePhoto = ref<string | null>(null);
   const showSaveProfilePhoto = ref(false);
   const props = defineProps<{
-    user: object
+    user: User
   }>();
 
   const form = useForm({
     name: props.user.name,
     email: props.user.email,
-    bio: props.user.bio
+    bio: props.user.bio,
   })
   const profilePictureForm = useForm({
     profile_picture: null
@@ -114,7 +116,6 @@
 <script lang="ts">
   import PageLayout from '@/Layouts/PageLayout.vue';
   import { ref } from "vue";
-  import { ToDataURLOptions } from "@vueuse/core";
   export default {
     layout: PageLayout,
     components: { TextInput }

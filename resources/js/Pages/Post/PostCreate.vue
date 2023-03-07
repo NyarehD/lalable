@@ -7,10 +7,10 @@
             v-model="form.description"></textarea>
         <PreviewPhoto :img-list="imgList" :errors="errors" />
         <div class="flex justify-between">
-            <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUpload"
+            <input type="file" accept="image/jpeg,image/png" class="hidden" id="photoUpload" ref="fileUploadRef"
                 @input="uploadAndPreviewPhoto" multiple>
             <label for="photoUpload">
-                <PrimaryBtn type="primary" class="px-3" @click.prevent="fileUpload.click()">
+                <PrimaryBtn type="primary" class="px-3" @click.prevent="fileUploadRef.click()">
                     <Media />
                 </PrimaryBtn>
             </label>
@@ -19,7 +19,7 @@
         <InputError :message="errors.description" v-if="errors.description" class="mt-3" />
     </form>
 </template>
-<script setup>
+<script setup lang="ts">
     import Media from "@/Components/Icons/Media.vue";
     import PreviewPhoto from "@/Components/PreviewPhoto.vue";
     import PrimaryBtn from "@/Components/PrimaryBtn.vue";
@@ -28,7 +28,7 @@
     import { ref } from "vue";
 
     const imgList = ref([]);
-    const fileUpload = ref(null);
+    const fileUploadRef = ref<HTMLInputElement>(null);
 
 
     defineProps({
@@ -51,7 +51,7 @@
         form.post(route("post.store"));
     };
 </script>
-<script>
+<script lang="ts">
     import PageLayout from "@/Layouts/PageLayout.vue";
 
     export default {

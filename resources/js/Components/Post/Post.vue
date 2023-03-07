@@ -27,16 +27,16 @@
             :total-comments="post.all_comments_count" />
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
     import PhotoCarousel from "@/Components/PhotoCarousel.vue";
     import PostProfile from "@/Components/Post/PostProfile.vue";
     import PostReaction from "@/Components/Post/PostReaction.vue";
+    import Post from "@/Types/post.type";
     import { router } from "@inertiajs/vue3";
 
-    const props = defineProps({
-        post: Object,
-    });
-
+    const props = defineProps<{
+        post: Post
+    }>()
     function goToPost() {
         router.visit(route("post.show", { id: props.post.id }), { preserveScroll: true });
     }
