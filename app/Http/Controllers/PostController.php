@@ -8,6 +8,7 @@ use App\Models\PostPhoto;
 use App\Rules\PostExistsRule;
 use App\Rules\UserHasLikedRule;
 use App\Rules\UserHasNotLikedRule;
+use Cache;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,12 @@ use Storage;
 
 class PostController extends Controller {
     public function index() {
-        $posts = Post::latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        // This is for paginating of posts
         // $posts = Post::latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->simplePaginate(12)->withPath(url("/api/post"));
+        $posts = Cache::remember("all_posts", 60 * 60, function () {
+            return Post::latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        });
+
         return Inertia::render("NewsFeed", [
             'posts' => $posts,
             'canLogin' => Route::has('login'),
