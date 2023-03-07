@@ -81,7 +81,15 @@ class PostController extends Controller {
     }
 
     public function show(Post $post) {
-        $post->load(["comments", "comments.replies", "comments.replies.user", "comments.user:id,name,profile_picture"]);
+        $post->load([
+            "comments" => [
+                "user:id,name,profile_picture",
+                // Replies are just comments
+                "replies",
+                // So calling replies.user is the same as calling comments.user
+                "replies.user"
+            ]
+        ]);
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
