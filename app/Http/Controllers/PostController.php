@@ -80,8 +80,9 @@ class PostController extends Controller {
         return redirect()->route("newsfeed")->with(["message" => "Post Created Successfully"]);
     }
 
-    public function show(Post $post) {
-        $post->load([
+    public function show($id) {
+        $post = Cache::remember("post_$id" . "_show", 60 * 60, function () use ($id) {
+            return Post::find($id)->load([
             "comments" => [
                 "user:id,name,profile_picture",
                 // Replies are just comments
@@ -90,6 +91,7 @@ class PostController extends Controller {
                 "replies.user"
             ]
         ]);
+        });
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
