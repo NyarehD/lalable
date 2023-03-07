@@ -73,6 +73,10 @@ class PostController extends Controller {
                 $postPhoto->save();
             }
         }
+
+        // Removes all posts cache so that the newly added will be included
+        Cache::forget("all_posts");
+
         return redirect()->route("newsfeed")->with(["message" => "Post Created Successfully"]);
     }
 
