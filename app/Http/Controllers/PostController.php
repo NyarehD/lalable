@@ -95,7 +95,10 @@ class PostController extends Controller {
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
-    public function edit(Post $post) {
+    public function edit($id) {
+        $post = Cache::remember("post_$id" . "_edit", 60 * 60, function () use ($id) {
+            return Post::find($id);
+        });
         if (Gate::allows("post_owner", $post)) {
             return Inertia::render("Post/PostEdit", ["post" => $post]);
         }
@@ -187,7 +190,10 @@ class PostController extends Controller {
     }
 
     public function search(Request $request) {
-        $posts = Post::latest()->where("description", "like", "%" . $request->keyword . "%")->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        $posts = Cache::remember("post_search_$request->keyword", 60 * 60, function () use ($request) {
+            return Post::latest()->where("description", "like", "%" . $request->keyword . "%")->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        });
+
         return Inertia::render("Post/PostSearchResults", [
             'posts' => $posts,
             'keyword' => $request->keyword,
