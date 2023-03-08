@@ -83,14 +83,14 @@ class PostController extends Controller {
     public function show($id) {
         $post = Cache::remember("post_$id" . "_show", 60 * 60, function () use ($id) {
             return Post::find($id)->load([
-            "comments" => [
-                "user:id,name,profile_picture",
-                // Replies are just comments
-                "replies",
-                // So calling replies.user is the same as calling comments.user
-                "replies.user"
-            ]
-        ]);
+                "comments" => [
+                    "user:id,name,profile_picture",
+                    // Replies are just comments
+                    "replies",
+                    // So calling replies.user is the same as calling comments.user
+                    "replies.user"
+                ]
+            ]);
         });
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
@@ -132,6 +132,9 @@ class PostController extends Controller {
                     $postPhoto->save();
                 }
             }
+
+            Cache::forget("all_posts");
+
             return redirect()->route("newsfeed");
         }
         return abort(403);
@@ -147,6 +150,9 @@ class PostController extends Controller {
                 PostPhoto::destroy($toDelete);
             }
             $post->delete();
+
+            Cache::forget("all_posts");
+
             return response('', 200);
         } else {
             return abort(404);
@@ -161,6 +167,9 @@ class PostController extends Controller {
         $like->post_id = $request->post_id;
         $like->user_id = Auth::id();
         $like->save();
+
+        Cache::flush();
+
         return response('', 200);
     }
 
@@ -169,6 +178,10 @@ class PostController extends Controller {
             "post_id" => [new PostExistsRule(), new UserHasLikedRule()],
         ]);
         Like::where("user_id", Auth::id())->where("post_id", $request['post_id'])->delete();
+
+        // Clear all cache for all posts
+        Cache::flush();
+
         return response('', 200);
     }
 
@@ -186,6 +199,9 @@ class PostController extends Controller {
             $newPost->save();
             return response('', 200);
         }
+
+        Cache::flush();
+
         return response("You cannot share a shared post", 403);
     }
 

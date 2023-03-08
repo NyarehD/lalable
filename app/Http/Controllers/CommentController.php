@@ -25,6 +25,9 @@ class CommentController extends Controller {
             $comment->parent_id = $request["parent_id"];
         }
         $comment->save();
+
+        Cache::flush();
+
         return redirect()->back();
     }
 
@@ -33,13 +36,18 @@ class CommentController extends Controller {
             "comment" => "string|max:255"
         ]);
         if (Gate::allows("comment_owner", $comment)) {
+            Cache::flush();
+
             $comment->update(["comment" => $request["comment"]]);
         }
     }
 
     public function destroy(Comment $comment) {
         if (Gate::allows("comment_owner", $comment)) {
+            Cache::flush();
+
             $comment->delete();
+
             return back()->with("message", "Comment Deleted");
         }
         return back()->with("message", "Cannot delete the message");

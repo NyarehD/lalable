@@ -44,6 +44,9 @@ class UserController extends Controller {
                 "email" => $request->email,
                 "bio" => $request->bio
             ]);
+
+            Cache::flush();
+
             return redirect()->back();
         }
         return abort(403);
@@ -63,6 +66,8 @@ class UserController extends Controller {
         // Update the file name in user
         $user->profile_picture = $newName;
         $user->update();
+
+        Cache::flush();
 
         return redirect()->back();
     }
