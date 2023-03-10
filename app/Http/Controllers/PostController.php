@@ -11,6 +11,7 @@ use App\Rules\UserHasNotLikedRule;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,8 +19,12 @@ use Storage;
 
 class PostController extends Controller {
     public function index() {
-        $posts = Post::latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        // This is for paginating of posts
         // $posts = Post::latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->simplePaginate(12)->withPath(url("/api/post"));
+        $posts = Cache::remember("all_posts", 60 * 60, function () {
+            return Post::latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        });
+
         return Inertia::render("NewsFeed", [
             'posts' => $posts,
             'canLogin' => Route::has('login'),
@@ -68,15 +73,32 @@ class PostController extends Controller {
                 $postPhoto->save();
             }
         }
+
+        // Removes all posts cache so that the newly added will be included
+        Cache::forget("all_posts");
+
         return redirect()->route("newsfeed")->with(["message" => "Post Created Successfully"]);
     }
 
-    public function show(Post $post) {
-        $post->load(["comments", "comments.replies", "comments.replies.user", "comments.user:id,name,profile_picture"]);
+    public function show($id) {
+        $post = Cache::remember("post_$id" . "_show", 60 * 60, function () use ($id) {
+            return Post::find($id)->load([
+                "comments" => [
+                    "user:id,name,profile_picture",
+                    // Replies are just comments
+                    "replies",
+                    // So calling replies.user is the same as calling comments.user
+                    "replies.user"
+                ]
+            ]);
+        });
         return Inertia::render("Post/PostShow", ["post" => $post]);
     }
 
-    public function edit(Post $post) {
+    public function edit($id) {
+        $post = Cache::remember("post_$id" . "_edit", 60 * 60, function () use ($id) {
+            return Post::find($id);
+        });
         if (Gate::allows("post_owner", $post)) {
             return Inertia::render("Post/PostEdit", ["post" => $post]);
         }
@@ -110,6 +132,9 @@ class PostController extends Controller {
                     $postPhoto->save();
                 }
             }
+
+            Cache::forget("all_posts");
+
             return redirect()->route("newsfeed");
         }
         return abort(403);
@@ -125,6 +150,9 @@ class PostController extends Controller {
                 PostPhoto::destroy($toDelete);
             }
             $post->delete();
+
+            Cache::forget("all_posts");
+
             return response('', 200);
         } else {
             return abort(404);
@@ -139,6 +167,9 @@ class PostController extends Controller {
         $like->post_id = $request->post_id;
         $like->user_id = Auth::id();
         $like->save();
+
+        Cache::flush();
+
         return response('', 200);
     }
 
@@ -147,6 +178,10 @@ class PostController extends Controller {
             "post_id" => [new PostExistsRule(), new UserHasLikedRule()],
         ]);
         Like::where("user_id", Auth::id())->where("post_id", $request['post_id'])->delete();
+
+        // Clear all cache for all posts
+        Cache::flush();
+
         return response('', 200);
     }
 
@@ -164,11 +199,17 @@ class PostController extends Controller {
             $newPost->save();
             return response('', 200);
         }
+
+        Cache::flush();
+
         return response("You cannot share a shared post", 403);
     }
 
     public function search(Request $request) {
-        $posts = Post::latest()->where("description", "like", "%" . $request->keyword . "%")->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        $posts = Cache::remember("post_search_$request->keyword", 60 * 60, function () use ($request) {
+            return Post::latest()->where("description", "like", "%" . $request->keyword . "%")->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        });
+
         return Inertia::render("Post/PostSearchResults", [
             'posts' => $posts,
             'keyword' => $request->keyword,

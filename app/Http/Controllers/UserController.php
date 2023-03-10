@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\UserSameAsAuth;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class UserController extends Controller {
     public function __construct() {
-        $this->middleware(UserSameAsAuth::class)->only("edit");
+        $this->middleware(UserSameAsAuth::class)->only("edit", "update", "updateProfilePicture");
     }
-    public function show(User $user) {
+    public function show($id) {
+        $user = Cache::remember("user_$id" . "_show", 60 * 60, function () use ($id) {
+            return User::find($id);
+        });
+        $posts = Cache::remember("user_$id" . "_show_posts", 60 * 60, function () use ($user) {
+            return $user->posts()->latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();
+        });
         return Inertia::render("User/UserView", [
             "user" => $user,
-            "posts" => $user->posts()->latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get()
+            "posts" => $posts
         ]);
     }
     public function edit(User $user) {
@@ -36,6 +44,9 @@ class UserController extends Controller {
                 "email" => $request->email,
                 "bio" => $request->bio
             ]);
+
+            Cache::flush();
+
             return redirect()->back();
         }
         return abort(403);
@@ -55,6 +66,8 @@ class UserController extends Controller {
         // Update the file name in user
         $user->profile_picture = $newName;
         $user->update();
+
+        Cache::flush();
 
         return redirect()->back();
     }
