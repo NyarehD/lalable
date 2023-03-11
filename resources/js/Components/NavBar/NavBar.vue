@@ -1,12 +1,13 @@
 <template>
     <header class="sticky inset-0 z-10 bg-white drop-shadow-xl dark:bg-neutral-800">
-        <div class="flex max-w-2xl md:max-w-[75rem] items-center justify-between px-3 dark:bg-neutral-800 h-16 mx-auto ">
+        <div class="flex max-w-2xl md:max-w-[75rem] items-center justify-between px-3 h-16 mx-auto ">
             <Link href="/" class="block">
             <img alt="Pokemon Logo" src="/Pokemon_International.svg" class="w-full h-10" />
             </Link>
+            <!-- Search Box -->
             <div class="relative hidden px-3 pl-5 md:block">
                 <span
-                    class="absolute inset-y-0 grid ml-3 transition-colors duration-300 hover:cursor-pointer hover:text-blue-600 left-4 place-content-center"
+                    class="absolute inset-y-0 grid ml-3 transition-colors duration-300 hover:cursor-pointer dark:text-white hover:text-blue-600 left-4 place-content-center"
                     @click.once="submitSearch">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
@@ -15,7 +16,7 @@
                     </svg>
                 </span>
                 <input
-                    class="px-4 py-3 pl-10 bg-gray-200 border-none rounded-3xl h-11 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                    class="px-4 py-3 pl-10 bg-gray-200 border-none rounded-3xl h-11 dark:bg-neutral-700/90 focus:outline-none focus:ring-1 focus:ring-indigo-600 dark:caret-white dark:text-white"
                     ref="input" @keypress.enter="submitSearch" v-model="searchForm.keyword">
             </div>
             <div class="flex items-center justify-end w-auto">
