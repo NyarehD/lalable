@@ -16,7 +16,7 @@ class UserController extends Controller {
     }
     public function show($id) {
         $user = Cache::remember("user_$id" . "_show", 60 * 60, function () use ($id) {
-            return User::find($id);
+            return User::findOrFail($id);
         });
         $posts = Cache::remember("user_$id" . "_show_posts", 60 * 60, function () use ($user) {
             return $user->posts()->latest()->with("original_post")->withCount("allComments", "total_likes", "user_liked")->get();

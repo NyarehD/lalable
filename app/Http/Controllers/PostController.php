@@ -82,7 +82,7 @@ class PostController extends Controller {
 
     public function show($id) {
         $post = Cache::remember("post_$id" . "_show", 60 * 60, function () use ($id) {
-            return Post::find($id)->load([
+            return Post::findOrFail($id)->load([
                 "comments" => [
                     "user:id,name,profile_picture",
                     // Replies are just comments
@@ -97,7 +97,7 @@ class PostController extends Controller {
 
     public function edit($id) {
         $post = Cache::remember("post_$id" . "_edit", 60 * 60, function () use ($id) {
-            return Post::find($id);
+            return Post::findOrFail($id);
         });
         if (Gate::allows("post_owner", $post)) {
             return Inertia::render("Post/PostEdit", ["post" => $post]);
