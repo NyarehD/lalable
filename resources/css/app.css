@@ -24,10 +24,10 @@
     }
 
     .dropdownLink {
-        @apply hover:bg-indigo-200/80 active:bg-indigo-300/80 first:rounded-t-3xl last:rounded-b-3xl block px-6 py-2 transition-colors duration-300 cursor-pointer;
+        @apply hover:bg-indigo-200/80 active:bg-indigo-300/80 first:rounded-t-3xl last:rounded-b-3xl dark:hover:bg-indigo-600/80 block px-6 py-2 transition-colors duration-300 cursor-pointer;
     }
 
     .dropdownButton {
-        @apply text-start hover:bg-indigo-200/80 active:bg-indigo-300/80 first:rounded-t-3xl last:rounded-b-3xl block w-full px-6 py-2 transition-colors duration-300 cursor-pointer;
+        @apply text-start hover:bg-indigo-200/80 active:bg-indigo-300/80 first:rounded-t-3xl last:rounded-b-3xl dark:hover:bg-indigo-600/80 block w-full px-6 py-2 transition-colors duration-300 cursor-pointer;
     }
 }
