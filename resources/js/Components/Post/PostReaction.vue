@@ -1,25 +1,28 @@
 <template>
     <div class="flex p-1.5 justify-around">
         <button
-            class="inline-flex items-center justify-center w-full font-semibold transition-colors duration-300 bg-transparent group hover:text-indigo-500"
+            class="dark:text-white/80 dark:hover:text-indigo-500 group hover:text-indigo-500 inline-flex items-center justify-center w-full font-semibold transition-colors duration-300 bg-transparent"
             :class="{ 'text-indigo-600': userLiked, 'text-gray-900/80': !userLiked }" @click.stop.prevent="toggleLike">
-            <a class="p-2 mr-1 rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80">
+            <a
+                class="group-hover:bg-indigo-200/80 dark:group-hover:bg-indigo-500/30 group-active:bg-indigo-300/80 p-2 mr-1 rounded-full">
                 <LikeSolid v-if="userLiked" class="text-indigo-600" />
                 <LikeOutline v-else />
             </a>
             {{ totalLikes }} {{ totalLikes > 1 ? "Likes" : "Like" }}
         </button>
         <button
-            class="inline-flex items-center justify-center w-full font-semibold transition-colors duration-300 bg-transparent text-gray-900/80 group hover:text-indigo-600">
-            <a class="p-2 mr-1 rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80">
+            class="dark:text-white/80 dark:hover:text-indigo-500 text-gray-900/80 group hover:text-indigo-600 inline-flex items-center justify-center w-full font-semibold transition-colors duration-300 bg-transparent">
+            <a
+                class="group-hover:bg-indigo-200/80 dark:group-hover:bg-indigo-500/30 group-active:bg-indigo-300/80 p-2 mr-1 rounded-full">
                 <CommentIcon class="" />
             </a>
             {{ totalComments }} {{ totalComments > 1 ? "Comments" : "Comment" }}
         </button>
         <button
-            class="inline-flex items-center justify-center w-full font-semibold transition-colors duration-300 bg-transparent text-gray-900/80 group hover:text-indigo-600"
+            class="dark:text-white/80 dark:hover:text-indigo-500 text-gray-900/80 group hover:text-indigo-600 inline-flex items-center justify-center w-full font-semibold transition-colors duration-300 bg-transparent"
             @click.stop.prevent="sharePost">
-            <a class="p-2 mr-1 rounded-full group-hover:bg-indigo-200/80 group-active:bg-indigo-300/80">
+            <a
+                class="group-hover:bg-indigo-200/80 dark:group-hover:bg-indigo-500/30 group-active:bg-indigo-300/80 p-2 mr-1 rounded-full">
                 <ShareIcon />
             </a>
             Share
