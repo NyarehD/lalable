@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white border-x-[1px] border-b-[1px] border-gray-500/20 first-of-type:border-t-2 first-of-type:rounded-t-3xl last-of-type:rounded-b-3xl hover:cursor-pointer hover:bg-gray-200/50 transition-colors duration-300"
+    <div class="bg-white dark:bg-neutral-800 dark:border-neutral-200/20 border-x-[1px] border-b-[1px] border-gray-500/20 first-of-type:border-t-2 first-of-type:rounded-t-3xl last-of-type:rounded-b-3xl hover:cursor-pointer hover:bg-gray-200/50 transition-colors duration-300 dark:text-white"
         @click.stop="goToPost">
         <PostProfile :post="post" />
         <div class="px-4 pb-3" v-if="post.description">
