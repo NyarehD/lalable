@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen">
+    <div class="min-h-screen">
         <form @submit.prevent="submit" class="rounded-3xl dark:bg-neutral-800 max-w-2xl px-8 py-4 mx-auto bg-gray-100"
             enctype="multipart/form-data">
             <h1 class="dark:text-white mb-4 text-3xl font-semibold">Create Post</h1>
