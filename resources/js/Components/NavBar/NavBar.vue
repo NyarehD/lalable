@@ -1,13 +1,13 @@
 <template>
-    <header class="sticky inset-0 z-10 bg-white drop-shadow-xl dark:bg-neutral-800">
+    <header class="drop-shadow-xl dark:bg-neutral-800 sticky inset-0 z-20 bg-white">
         <div class="flex max-w-2xl md:max-w-[75rem] items-center justify-between px-3 h-16 mx-auto ">
             <Link href="/" class="block">
             <img alt="Pokemon Logo" src="/Pokemon_International.svg" class="w-full h-10" />
             </Link>
             <!-- Search Box -->
-            <div class="relative hidden px-3 pl-5 md:block">
+            <div class="md:block relative hidden px-3 pl-5">
                 <span
-                    class="absolute inset-y-0 grid ml-3 transition-colors duration-300 hover:cursor-pointer dark:text-white hover:text-blue-600 left-4 place-content-center"
+                    class="hover:cursor-pointer dark:text-white hover:text-blue-600 left-4 place-content-center absolute inset-y-0 grid ml-3 transition-colors duration-300"
                     @click.once="submitSearch">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
@@ -16,24 +16,24 @@
                     </svg>
                 </span>
                 <input
-                    class="px-4 py-3 pl-10 bg-gray-200 border-none rounded-3xl h-11 dark:bg-neutral-700/90 focus:outline-none focus:ring-1 focus:ring-indigo-600 dark:caret-white dark:text-white"
+                    class="rounded-3xl h-11 dark:bg-neutral-700/90 focus:outline-none focus:ring-1 focus:ring-indigo-600 dark:caret-white dark:text-white px-4 py-3 pl-10 bg-gray-200 border-none"
                     ref="input" @keypress.enter="submitSearch" v-model="searchForm.keyword">
             </div>
             <div class="flex items-center justify-end w-auto">
                 <div class="mr-3">
-                    <Link class="inline-flex items-center px-3 primaryBtn" href="/post/create" v-if="user" as="button">
+                    <Link class="primaryBtn inline-flex items-center px-3" href="/post/create" v-if="user" as="button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                     </svg>
-                    <span class="hidden ml-1 md:block">Post</span>
+                    <span class="md:block hidden ml-1">Post</span>
                     </Link>
                 </div>
-                <DarkModeButton class="hidden mr-3 md:block" />
+                <DarkModeButton class="md:block hidden mr-3" />
                 <div class="mr-3" v-if="user">
                     <Link :href="route('user.show', { user: user.id })">
-                    <img :src="user.full_image_path" :alt="user.name" class="rounded-full h-11 w-11">
+                    <img :src="user.full_image_path" :alt="user.name" class="h-11 w-11 rounded-full">
                     </Link>
                 </div>
                 <div class="mx-3" v-else>
@@ -46,10 +46,10 @@
                 <NavBarToggleBtn @click="navBarToggle = !navBarToggle" :toggle-status="navBarToggle" />
             </div>
         </div>
-        <div class="absolute w-full max-w-screen-xl px-4 pb-4 mx-auto transition-all duration-300 bg-white navMobile -z-10 dark:bg-neutral-800 md:hidden md:px-8"
+        <div class="navMobile -z-10 dark:bg-neutral-800 md:hidden md:px-8 absolute w-full max-w-screen-xl px-4 pb-4 mx-auto transition-all duration-300 bg-white"
             :class="{ appear: navBarToggle }">
             <nav class="" aria-label="header-navigation">
-                <ul class="flex flex-col items-center text-sm text-co">
+                <ul class="text-co flex flex-col items-center text-sm">
                     <li class="w-full h-10 text-center align-middle">
                         <NavBarLink link="pokedex" @click="toggleNavBar">
                             Pokedex
