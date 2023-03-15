@@ -2,7 +2,7 @@
     <Teleport to="body">
         <Transition>
             <div v-if="isShown" ref="popUp"
-                class="fixed rounded-3xl bg-white/95 backdrop-blur-2xl -translate-x-1/2 p-8 top-1/3 left-1/2 max-w-[30rem] drop-shadow-2xl">
+                class="fixed rounded-3xl bg-white/95 dark:bg-neutral-700/95 dark:text-white backdrop-blur-2xl -translate-x-1/2 p-8 top-1/3 left-1/2 max-w-[30rem] drop-shadow-2xl">
                 <h2 class="mb-5 text-lg font-semibold text-center">
                     <slot name="title" />
                 </h2>
@@ -18,10 +18,10 @@
 </template>
 
 <script setup>
-    
+
     import { ref } from "vue";
     import { onClickOutside } from "@vueuse/core";
-    
+
     const popUp = ref(null);
     let { isShown } = defineProps({
         isShown: Boolean,
@@ -29,7 +29,7 @@
     const emits = defineEmits([
         "clickedOutside",
     ]);
-    
+
     onClickOutside(popUp, () => emits("clickedOutside"));
 </script>
 
