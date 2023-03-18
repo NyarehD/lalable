@@ -2,7 +2,7 @@
     <header class="drop-shadow-xl dark:bg-neutral-800 sticky inset-0 z-20 bg-white">
         <div class="flex max-w-2xl md:max-w-[75rem] items-center justify-between px-3 h-16 mx-auto ">
             <Link href="/" class="block">
-            <img alt="Pokemon Logo" src="/Pokemon_International.svg" class="w-full h-10" />
+            <h1 class=" dark:text-indigo-500 text-3xl font-extrabold text-indigo-800">Lalable</h1>
             </Link>
             <!-- Search Box -->
             <div class="md:block relative hidden px-3 pl-5">
