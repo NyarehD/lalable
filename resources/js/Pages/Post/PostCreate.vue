@@ -4,7 +4,7 @@
             enctype="multipart/form-data">
             <h1 class="dark:text-white mb-4 text-3xl font-semibold">Create Post</h1>
             <textarea name="description" id="description" rows="4" placeholder="Write something..."
-                class="rounded-3xl dark:caret-white dark:text-white placeholder:text-white/70 focus:outline-none dark:bg-neutral-700 w-full p-4 mb-4 bg-gray-200 border-none resize-none"
+                class="rounded-3xl dark:caret-white dark:text-white dark:placeholder:text-white/70 focus:outline-none dark:bg-neutral-700 w-full p-4 mb-4 bg-gray-200 border-none resize-none"
                 v-model="form.description"></textarea>
             <PreviewPhoto :img-list="imgList" :errors="errors" />
             <div class="flex justify-between">
