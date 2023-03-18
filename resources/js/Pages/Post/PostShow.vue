@@ -1,14 +1,15 @@
 <template>
     <!--    Do not search for solutions for overflowing in this page. That overflow is caused by laravel debug bar by adding margin-bottom: 3px to body-->
     <template v-if="post.post_photos.length > 0">
-        <div class="relative flex flex-col max-h-screen overflow-hidden md:flex-row rounded-3xl">
+        <div class="md:flex-row bg dark:bg-neutral-800 relative flex flex-col max-h-screen overflow-hidden">
             <div class="md:w-7/12 lg:w-2/3" v-if="post.post_photos.length > 1">
                 <PhotoCarousel :photos="post.post_photos" :is-full-height="true" v-show="true" />
             </div>
             <div class="md:w-7/12 lg:w-2/3" v-else>
                 <img :src="post.post_photos[0]?.photo_src" alt="" class="object-contain h-screen mx-auto">
             </div>
-            <div class="border-l-[1px] border-inherit max-h-screen flex flex-col md:w-5/12 lg:w-1/3 rounded-r-3xl">
+            <div
+                class="border-l-[1px] dark:border-neutral-200/20 border-inherit max-h-screen flex flex-col md:w-5/12 lg:w-1/3 rounded-r-3xl dark:text-white">
                 <PostProfile :post="post" />
                 <div class="px-4 pb-3" v-if="post.description">
                     <p class="text-lg">{{ post.description }}</p>
@@ -16,14 +17,14 @@
                 <PostReaction :post-id="post.id" :total-likes="post.total_likes_count" :user-liked="post.user_liked" />
                 <CommentSection :post-id="post.id" :comments="post.comments" class="flex-grow overflow-auto" />
             </div>
-            <PrimaryBtn type="text" class="absolute p-1 text-indigo-500 top-3 left-3" @click="goToNewsFeed">
+            <PrimaryBtn type="text" class="top-3 left-3 dark:text-white absolute p-1 text-indigo-500" @click="goToNewsFeed">
                 <XMark />
             </PrimaryBtn>
         </div>
     </template>
     <template v-else>
         <PageLayout>
-            <div class="max-w-2xl px-2 mx-auto">
+            <div class="max-w-2xl min-h-screen px-2 mx-auto">
                 <Post :post="post" />
             </div>
         </PageLayout>

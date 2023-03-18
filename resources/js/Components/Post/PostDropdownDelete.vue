@@ -7,7 +7,9 @@
             Are you sure you want to delete?
         </template>
         <template v-slot:buttons>
-            <PrimaryBtn type="outline" class="mr-3 text-red-600 border-red-600 hover:bg-red-600" @click.stop="deletePost">
+            <PrimaryBtn type="outline"
+                class="dark:text-red-600 dark:hover:bg-red-600 hover:bg-red-600 mr-3 text-red-600 border-red-600"
+                @click.stop="deletePost">
                 Delete
             </PrimaryBtn>
             <PrimaryBtn type="primary" @click.stop="doesPopUpShow = false">Cancel</PrimaryBtn>

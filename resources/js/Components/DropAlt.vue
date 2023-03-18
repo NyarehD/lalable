@@ -3,7 +3,7 @@
         <PrimaryBtn class="h-10 p-2" type="text" @click.stop="isDropdownActive = !isDropdownActive">
             <EllipsisVerticalIcon />
         </PrimaryBtn>
-        <div class="absolute right-0 z-10 bg-white border-[1px] border-gray-500/20 rounded-3xl w-32 group"
+        <div class="absolute right-0 z-10 bg-white border-[1px] border-gray-500/20 rounded-3xl w-32 group dark:border-neutral-200/20 dark:bg-neutral-800"
             :class="{ 'fade': isDropdownActive }" v-show="isDropdownActive">
             <slot />
         </div>
