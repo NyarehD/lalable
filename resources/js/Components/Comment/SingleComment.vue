@@ -1,11 +1,11 @@
 <template>
     <div class="flex">
-        <img :src="comment.user.full_image_path" :alt="comment.user.name" class="rounded-full w-11 h-11">
+        <img :src="comment.user.full_image_path" :alt="comment.user.name" class="w-11 h-11 rounded-full">
         <div class="w-full ml-2">
             <div class="flex items-center justify-between w-full">
                 <div class="">
                     <p class="font-semibold"> {{ comment.user.name }}</p>
-                    <p class="text-gray-900/70">{{ comment.for_humans }}</p>
+                    <p class="text-gray-900/70 dark:text-white/80">{{ comment.for_humans }}</p>
                 </div>
                 <div class="flex items-center">
                     <DropAlt class="ml-2">
@@ -19,7 +19,8 @@
                                 Edit your comment
                             </template>
                             <template v-slot:content>
-                                <TextInput class="w-96" v-model="editingComment" @keydown.enter="" />
+                                <TextInput class="w-96 dark:text-white dark:bg-neutral-800" v-model="editingComment"
+                                    @keydown.enter="" />
                             </template>
                             <template v-slot:buttons>
                                 <PrimaryBtn type="primary" class="mr-3" @click.stop="updateComment">
@@ -39,7 +40,8 @@
                                 Reply to {{ comment.user.name }}
                             </template>
                             <template v-slot:content>
-                                <TextInput class="w-96" v-model="replyingComment" @keydown.enter="replyComment" />
+                                <TextInput class="w-96 dark:text-white dark:bg-neutral-800" v-model="replyingComment"
+                                    @keydown.enter="replyComment" />
                             </template>
                             <template v-slot:buttons>
                                 <PrimaryBtn type="primary" class="mr-3" @click.stop="replyComment">
@@ -60,7 +62,7 @@
                                 Are you sure you want to delete the comment?
                             </template>
                             <template v-slot:buttons>
-                                <PrimaryBtn type="outline" class="mr-3 text-red-600 border-red-600 hover:bg-red-600"
+                                <PrimaryBtn type="outline" class="hover:bg-red-600 mr-3 text-red-600 border-red-600"
                                     @click.stop="deleteComment">
                                     Delete
                                 </PrimaryBtn>
