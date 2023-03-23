@@ -1,6 +1,7 @@
 <template>
     <div class="flex">
-        <img :src="comment.user.full_image_path" :alt="comment.user.name" class="w-11 h-11 rounded-full">
+        <img :src="comment.user.full_image_path" :alt="comment.user.name"
+            class="w-11 h-11 shrink-0 object-cover rounded-full">
         <div class="w-full ml-2">
             <div class="flex items-center justify-between w-full">
                 <div class="">
