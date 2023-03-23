@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
-        <div class="grow-0 flex justify-between gap-2 px-4 py-3">
-            <img :src="user.full_image_path" alt="" class="w-11 h-auto rounded-full">
+        <div class="flex justify-between gap-2 px-4 py-3">
+            <img :src="user.full_image_path" alt="" class="w-11 h-11 shrink-0 object-cover rounded-full">
             <TextInput class="dark:text-white dark:caret-white dark:bg-neutral-700/90 w-full" v-model="comment"
                 @keydown.enter="commentPost" />
             <PrimaryBtn @click.prevent="commentPost" type="primary">Comment</PrimaryBtn>

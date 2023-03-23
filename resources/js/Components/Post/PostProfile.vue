@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-between px-4 py-3">
         <div class="flex">
-            <img :src="post.owner.full_image_path" :alt="post.owner.name" class="w-12 h-12 rounded-full">
+            <img :src="post.owner.full_image_path" :alt="post.owner.name" class="object-cover w-12 h-12 rounded-full">
             <div class="ml-3">
                 <p class="font-semibold"> {{ post.owner.name }}</p>
                 <p>{{ post.for_humans }}</p>
